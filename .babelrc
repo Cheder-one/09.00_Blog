@@ -1,0 +1,17 @@
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    ["@emotion"],
+    [
+      "babel-plugin-module-resolver",
+      {
+        "alias": {
+          "@/styles": "./src/styles",
+          "@/reducers": "./src/app/store/reducers",
+          "@/utils": "./src/app/utils",
+          "@/ui": "./src/app/ui"
+        }
+      }
+    ]
+  ]
+}
