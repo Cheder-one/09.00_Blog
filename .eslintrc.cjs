@@ -15,6 +15,7 @@ module.exports = {
   // $ npx install-peerdeps --dev eslint-config-airbnb
   extends: [
     'airbnb',
+    'react-app',
     'eslint:recommended',
     'plugin:prettier/recommended',
     'plugin:react/recommended',
@@ -24,13 +25,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
   ],
-  plugins: [
-    'react',
-    'react-refresh',
-    'prettier',
-    'import',
-    '@emotion',
-  ],
+  plugins: ['react', 'react-refresh', 'prettier', 'import', '@emotion'],
   ignorePatterns: ['node_modules', 'dist', 'build'],
   overrides: [
     {
@@ -55,10 +50,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/forbid-prop-types': 'warn',
-    'react/jsx-filename-extension': [
-      'warn',
-      { extensions: ['.js', '.jsx'] },
-    ],
+    'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
     'no-unused-vars': [
       'warn',
       {
@@ -89,12 +81,17 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      // { js: 'never', jsx: 'never' },
+    ],
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.json', '.css', '.scss'],
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss'],
         moduleDirectory: ['node_modules', 'src/'],
       },
       alias: {
