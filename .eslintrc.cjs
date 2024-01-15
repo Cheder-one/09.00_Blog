@@ -46,8 +46,8 @@ module.exports = {
     'react/prop-types': 'warn',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
+      'off',
+      // { allowConstantExport: true },
     ],
     'react/forbid-prop-types': 'warn',
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
@@ -59,7 +59,7 @@ module.exports = {
     ],
     'import/no-extraneous-dependencies': 'off',
     'import/no-cycle': 'off',
-    // '@emotion/jsx-import': 'error',
+    // "@emotion/jsx-import": "error",
     '@emotion/import-from-emotion': 'error',
     '@emotion/styled-import': 'error',
     'react/no-unknown-property': ['error', { ignore: ['css'] }],
@@ -81,11 +81,7 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      // { js: 'never', jsx: 'never' },
-    ],
+    'import/extensions': 'off',
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.json', '.css', '.scss'],

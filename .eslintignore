@@ -2,3 +2,5 @@ node_modules/**
 build/**
 dist/**
 webpack.config.js
+tailwind.config.js
+postcss.config.js
