@@ -14,17 +14,15 @@
 
   .header_meta {
     margin-right: auto;
+    padding-right: 20px;
 
-    :global {
-      .ant-row {
-        flex-wrap: nowrap;
-      }
+    .title_row {
+      flex-wrap: nowrap;
     }
 
     .title {
-      margin-right: 12px;
+      margin-right: 10px;
       margin-bottom: 4px;
-      max-width: 70%;
 
       color: $info-color;
       @include h5-font-style;
@@ -36,7 +34,7 @@
       gap: 4px;
       display: flex;
       align-items: center;
-      padding-bottom: 4px;
+      padding-bottom: 5px;
 
       & > span {
         cursor: default;
@@ -44,9 +42,9 @@
     }
 
     .tags {
+      height: 50px;
       display: flex;
       overflow: hidden;
-      // white-space: nowrap;
       text-overflow: ellipsis;
 
       font-size: 12px;
@@ -58,18 +56,16 @@
 
       & > * {
         height: 20px;
-        margin-right: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin: 0 8px 4px 0;
 
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 21px;
 
         border-radius: 2px;
         border: 1px solid $text-color-secondary;
         @include truncated-word();
+        @include truncated-text(1);
 
         &:hover {
           color: black;
@@ -107,6 +103,7 @@
 }
 
 .description {
+  @include truncated-word();
   @include truncated-text(3);
 
   .text {

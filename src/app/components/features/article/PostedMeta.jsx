@@ -1,10 +1,7 @@
 import { Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
-import { css, jsx } from '@emotion/react';
 
 import _ from './Article.module.scss';
-
-/** @jsxImportSource @emotion/react */
 
 function PostedMeta({ date, image, username }) {
   return (

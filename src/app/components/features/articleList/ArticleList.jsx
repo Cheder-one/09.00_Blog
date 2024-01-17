@@ -4,7 +4,7 @@ function ArticleList({ articles }) {
   return (
     <div>
       {articles.map((article) => (
-        <Article key={article.slug} article={article} />
+        <Article key={article.id} article={article} />
       ))}
     </div>
   );

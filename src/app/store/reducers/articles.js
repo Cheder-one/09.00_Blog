@@ -32,7 +32,7 @@ const articlesSlice = createSlice({
 const { received, requested, requestFailed } = articlesSlice.actions;
 
 export const articleActions = {
-  chunkLoaded: (params) => async (dispatch, getState) => {
+  chunkLoaded: (params) => async (dispatch) => {
     dispatch(requested());
     try {
       const data = await articlesApi.getChunk(params);

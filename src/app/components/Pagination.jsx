@@ -24,7 +24,7 @@ function Pagination({ itemsCount }) {
           current={currentPage}
           pageSize={pageSize}
           defaultCurrent={1}
-          pageSizeOptions={['5', '10', '20', '50', '100']}
+          pageSizeOptions={['5', '10', '20', '50', '100', '500']}
           onChange={handlePageChange}
         />
       ) : null}

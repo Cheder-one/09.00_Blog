@@ -7,7 +7,7 @@ const articleService = {
   getChunk: async (params) => {
     try {
       const { data } = await api.get('/articles', { params });
-      return { ...data, ...addUniqIds(data.articles) };
+      return { ...data, articles: addUniqIds(data.articles) };
     } catch (error) {
       const info = 'Ошибка получения articles';
       throw new ServiceError(error, info);

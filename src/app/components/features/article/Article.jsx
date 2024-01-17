@@ -24,7 +24,6 @@ import HeaderMeta from './HeaderMeta';
 // },
 
 function Article({ article }) {
-  console.log(article);
   return (
     <div className={_.article_card}>
       <Row className={_.header} css={{ flexWrap: 'nowrap' }}>
@@ -34,13 +33,11 @@ function Article({ article }) {
           hearts={article.favoritesCount}
           tagList={article.tagList}
         />
-        {/* <Col span={18}> */}
         <PostedMeta
           date={article.createdAt}
           image={article.author.image}
           username={article.author.username}
         />
-        {/* </Col> */}
       </Row>
       <Row className={_.description}>
         <div className={_.text}>{article.description}</div>

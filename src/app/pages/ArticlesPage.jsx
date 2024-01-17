@@ -19,7 +19,6 @@ function ArticlesPage() {
   const pagination = useSelector(getPagination());
   const isLoading = useSelector(getArticlesIsLoading());
   const { articles, articlesCount } = useSelector(getArticles());
-  console.log(articles);
   const articlesAct = bindActions(articleActions, useDispatch());
 
   useEffect(() => {
