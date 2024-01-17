@@ -1,10 +1,10 @@
 import Article from '../article/Article';
 
-function ArticleList({ articles, className }) {
+function ArticleList({ articles }) {
   return (
-    <div className={className}>
-      {articles.map((item) => (
-        <Article key={item.id} title={item.title} hearts={item.hearts} />
+    <div>
+      {articles.map((article) => (
+        <Article key={article.slug} article={article} />
       ))}
     </div>
   );

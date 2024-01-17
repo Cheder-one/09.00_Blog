@@ -1,50 +1,49 @@
-import { Col, Row } from 'antd';
-import { Link } from 'react-router-dom';
-
-import heart from '../../../assets/heart.svg';
-import avatar from '../../../assets/avatar.png';
-import { LinkAs } from '../../common';
+/** @jsxImportSource @emotion/react */
+import { Row } from 'antd';
+import { css, jsx } from '@emotion/react';
 
 import _ from './Article.module.scss';
+import PostedMeta from './PostedMeta';
+import HeaderMeta from './HeaderMeta';
 
-function Article({ id, title, hearts }) {
+// article: {
+//   slug: '11-df7ech',
+//   title: '11',
+//   description: '11',
+//   body: '1111',
+//   createdAt: '2024-01-15T16:10:00.919Z',
+//   updatedAt: '2024-01-16T19:28:17.288Z',
+//   tagList: ['11'],
+//   favorited: false,
+//   favoritesCount: 2,
+//   author: {
+//     username: 'dikayaulitka123',
+//     image: 'https://static.productionready.io/images/smiley-cyrus.jpg',
+//     following: false,
+//   },
+// },
+
+function Article({ article }) {
+  console.log(article);
   return (
     <div className={_.article_card}>
-      <Row className={_.header}>
-        <Col className={_.article_meta}>
-          <Row>
-            <Link to={`article/${'id'}`} className={_.title}>
-              Some article title
-            </Link>
-            <button type="button" className={_.hearts}>
-              <img src={heart} alt="heart" />
-              <span>12</span>
-            </button>
-          </Row>
-          <Row className={_.tags}>
-            <a href="/">Tag</a>
-            <a href="/">Tag</a>
-            <a href="/">Tag</a>
-          </Row>
-        </Col>
-        <LinkAs as={Row} className={_.author} to="/profile">
-          <Col className={_.posted_meta}>
-            <div className={_.name}>John Doe</div>
-            <div className={_.date}>March 5, 2020</div>
-          </Col>
-          <Col>
-            <img src={avatar} alt="profile" width={46} />
-          </Col>
-        </LinkAs>
+      <Row className={_.header} css={{ flexWrap: 'nowrap' }}>
+        <HeaderMeta
+          slug={article.slug}
+          title={article.title}
+          hearts={article.favoritesCount}
+          tagList={article.tagList}
+        />
+        {/* <Col span={18}> */}
+        <PostedMeta
+          date={article.createdAt}
+          image={article.author.image}
+          username={article.author.username}
+        />
+        {/* </Col> */}
       </Row>
-
-      <Row className={_.body}>
-        <div className={_.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </div>
+      <Row className={_.description}>
+        <div className={_.text}>{article.description}</div>
       </Row>
     </div>
   );

@@ -32,6 +32,7 @@ module.exports = {
       files: ['./src/app/store/**/*.js'],
       rules: {
         'default-param-last': 'off',
+        'no-param-reassign': 'off', // Только для Emmet createSlice()
       },
     },
   ],
@@ -49,6 +50,7 @@ module.exports = {
       'off',
       // { allowConstantExport: true },
     ],
+    'import/prefer-default-export': 'warn',
     'react/forbid-prop-types': 'warn',
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
     'no-unused-vars': [

@@ -1,7 +1,7 @@
 import { Flex } from 'antd';
 
-import { Header } from './app/components';
 import { Routes } from './app/routes';
+import { Header } from './app/components';
 
 function App() {
   return (

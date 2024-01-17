@@ -1,23 +1,40 @@
+import { Col } from 'antd';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators as bindActions } from 'redux';
+
 import { Pagination } from '../components';
 import { ArticleList } from '../components/features';
-
-const articles = [];
-
-// eslint-disable-next-line
-for (let i = 0; i < 5; i++) {
-  articles.push({
-    id: i,
-    title: 'Some article title',
-    hearts: 12,
-  });
-}
+import {
+  getArticles,
+  articleActions,
+  getArticlesIsLoading,
+} from '../store/reducers/articles';
+import { getPaginateParams } from '../utils';
+import { getErrors } from '../store/reducers/errors';
+import { getPagination } from '../store/reducers/pagination';
 
 function ArticlesPage() {
+  const errors = useSelector(getErrors());
+  const pagination = useSelector(getPagination());
+  const isLoading = useSelector(getArticlesIsLoading());
+  const { articles, articlesCount } = useSelector(getArticles());
+  console.log(articles);
+  const articlesAct = bindActions(articleActions, useDispatch());
+
+  useEffect(() => {
+    const params = getPaginateParams({ pagination });
+    articlesAct.chunkLoaded(params);
+  }, [pagination]);
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <ArticleList {...{ articles }} />
-      <Pagination itemsCount={articles.length} />
-    </div>
+    !isLoading &&
+    !errors.articles && (
+      <Col>
+        <ArticleList articles={articles} />
+        <Pagination itemsCount={articlesCount} />
+      </Col>
+    )
   );
 }
 

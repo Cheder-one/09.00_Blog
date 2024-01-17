@@ -42,3 +42,9 @@
   -moz-box-orient: vertical;
   -moz-line-clamp: $line-count;
 }
+
+@mixin truncated-word() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
