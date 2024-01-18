@@ -1,10 +1,10 @@
-import Article from '../article/Article';
+import Article from '../article/miniArticle/Article';
 
 function ArticleList({ articles }) {
   return (
     <div>
       {articles.map((article) => (
-        <Article key={article.id} article={article} />
+        <Article key={article.slug} article={article} />
       ))}
     </div>
   );

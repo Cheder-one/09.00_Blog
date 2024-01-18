@@ -1,14 +1,22 @@
 import { Flex } from 'antd';
+import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 
-import { Routes } from './app/routes';
-import { Header } from './app/components';
+import { Header, NotFound } from './app/components';
+import { DynamicArticleRender } from './app/hoc';
+import { ArticlesPage } from './app/pages';
 
 function App() {
+  // TODO Реализовать Skeleton || Loader
+
   return (
     <>
       <Header logoTitle="Realworld Blog" />
       <Flex justify="center">
-        <Routes />
+        <Switch>
+          <Route path="/articles/:slug" component={DynamicArticleRender} />
+          <Route path="/" exact component={ArticlesPage} />
+          <Route component={NotFound} />
+        </Switch>
       </Flex>
     </>
   );

@@ -5,12 +5,32 @@
   margin-bottom: 26px;
   padding: 15px 15px 20px 15px;
 
+  & > * {
+    overflow: hidden;
+    word-break: break-word;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
   border-radius: 5px;
   background: $background-color-base;
 }
 
+.title {
+  margin-right: 10px;
+  margin-bottom: 4px;
+
+  color: $info-color;
+  @include h5-font-style;
+  @include truncated-word();
+  @include truncated-text(1);
+}
+
 .header {
   margin-bottom: 8px;
+  flex-wrap: nowrap;
 
   .header_meta {
     margin-right: auto;
@@ -34,7 +54,7 @@
       gap: 4px;
       display: flex;
       align-items: center;
-      padding-bottom: 5px;
+      padding-bottom: 3px;
 
       & > span {
         cursor: default;
@@ -42,7 +62,7 @@
     }
 
     .tags {
-      height: 50px;
+      max-height: 50px;
       display: flex;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -103,11 +123,12 @@
 }
 
 .description {
+  margin-bottom: 20px;
   @include truncated-word();
   @include truncated-text(3);
 
   .text {
     width: 75%;
-    height: 50px;
+    max-height: 50px;
   }
 }

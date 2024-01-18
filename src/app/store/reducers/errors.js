@@ -4,8 +4,10 @@ const initialState = {
   entities: {},
 };
 
+const ERRORS = 'errors';
+
 const errorsSlice = createSlice({
-  name: 'errors',
+  name: ERRORS,
   initialState,
   reducers: {
     set(state, action) {
@@ -27,6 +29,8 @@ export const clearErrors = () => (dispatch) => {
   dispatch(clear());
 };
 
-export const getErrors = () => (state) => state.errors.entities;
+export const errorsSelectors = {
+  getError: (state) => state[ERRORS].entities,
+};
 
 export default errorsSlice.reducer;

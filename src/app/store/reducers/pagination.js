@@ -5,8 +5,10 @@ const initialState = {
   pageSize: 5,
 };
 
+const PAGINATION = 'pagination';
+
 const paginationSlice = createSlice({
-  name: 'pagination',
+  name: PAGINATION,
   initialState,
   reducers: {
     updated: (state, action) => {
@@ -21,11 +23,14 @@ const { updated } = paginationSlice.actions;
 export const paginationActions = {
   updated: (page, size, cb) => async (dispatch) => {
     await dispatch(updated({ page, size }));
-
     if (typeof cb === 'function') cb();
   },
 };
 
-export const getPagination = () => (state) => state.pagination;
+export const paginationSelectors = {
+  getPagination: (state) => state[PAGINATION],
+  getCurrentPage: (state) => state[PAGINATION].currentPage,
+  getPageSize: (state) => state[PAGINATION].pageSize,
+};
 
 export default paginationSlice.reducer;

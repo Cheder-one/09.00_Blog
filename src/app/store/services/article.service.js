@@ -1,28 +1,27 @@
 import ServiceError from '../../utils/ServiceError';
-import addUniqIds from '../../utils/addUniqIds';
 
 import api from './api.service';
 
 const articleService = {
-  getChunk: async (params) => {
+  loadChunk: async (params) => {
     try {
       const { data } = await api.get('/articles', { params });
-      return { ...data, articles: addUniqIds(data.articles) };
+      return data;
     } catch (error) {
       const info = 'Ошибка получения articles';
       throw new ServiceError(error, info);
     }
   },
-  getOne: async (id) => {
+  loadOne: async (slug) => {
     try {
-      const { data } = await api.get(`/articles/${id}`);
+      const { data } = await api.get(`/articles/${slug}`);
       return data;
     } catch (error) {
-      const info = `Ошибка получения article с ID ${id}`;
+      const info = `Ошибка получения article с ID ${slug}`;
       throw new ServiceError(error, info);
     }
   },
-  post: async (data) => {
+  create: async (data) => {
     try {
       const response = await api.post('/articles', data);
       return response;
@@ -31,21 +30,21 @@ const articleService = {
       throw new ServiceError(error, info);
     }
   },
-  update: async (id, data) => {
+  update: async (slug, data) => {
     try {
-      const response = await api.put(`/articles/${id}`, data);
+      const response = await api.put(`/articles/${slug}`, data);
       return response;
     } catch (error) {
-      const info = `Ошибка обновления article с ID ${id}`;
+      const info = `Ошибка обновления article с ID ${slug}`;
       throw new ServiceError(error, info);
     }
   },
-  delete: async (id) => {
+  delete: async (slug) => {
     try {
-      const response = await api.delete(`/articles/${id}`);
+      const response = await api.delete(`/articles/${slug}`);
       return response;
     } catch (error) {
-      const info = `Ошибка удаления article с ID ${id}`;
+      const info = `Ошибка удаления article с ID ${slug}`;
       throw new ServiceError(error, info);
     }
   },

@@ -9,10 +9,10 @@ function Header({ logoTitle }) {
       <Link to="/" className={_.logo_title}>
         {logoTitle}
       </Link>
-      <Link className={_.sign_in} to="signIn/">
+      <Link className={_.sign_in} to="/sign-in/">
         Sign In
       </Link>
-      <Link className={_.sign_out} to="signUp/">
+      <Link className={_.sign_out} to="/sign-up/">
         Sign Up
       </Link>
     </div>
