@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
 
 import FullArticle from '../components/features/article/fullArticle/FullArticle';
-import { Article } from '../components/features';
+import { ArticlesPage } from '../pages';
 
 function DynamicArticleRender() {
   const { slug } = useParams();
 
-  return slug ? <FullArticle slug={slug} /> : <Article />;
+  return slug ? <FullArticle slug={slug} /> : <ArticlesPage />;
 }
 
 export default DynamicArticleRender;

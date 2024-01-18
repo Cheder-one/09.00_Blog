@@ -1,7 +1,6 @@
 import { Col } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 
 import { Pagination } from '../components';
@@ -10,13 +9,12 @@ import { ArticleList } from '../components/features';
 import { errorsSelectors } from '../store/reducers/errors';
 import { paginationSelectors } from '../store/reducers/pagination';
 import { articleActions, articleSelectors } from '../store/reducers/articles';
-import FullArticle from '../components/features/article/fullArticle/FullArticle';
 
 function ArticlesPage({
   articlesChunk,
   pagination,
-  isLoading,
   errors,
+  isLoading,
   setArticlesChunk,
 }) {
   const { articles, articlesCount } = articlesChunk;

@@ -13,7 +13,7 @@ function App() {
       <Header logoTitle="Realworld Blog" />
       <Flex justify="center">
         <Switch>
-          <Route path="/articles/:slug" component={DynamicArticleRender} />
+          <Route path="/articles/:slug?" component={DynamicArticleRender} />
           <Route path="/" exact component={ArticlesPage} />
           <Route component={NotFound} />
         </Switch>
