@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators as bindActions } from 'redux';
 
-import { Pagination } from '../components';
-import { getPaginateParams } from '../utils';
+import { Pagination } from '../components/ui';
+import { getPaginateParams } from '../../utils';
 import { ArticleList } from '../components/features';
 import { errorsSelectors } from '../store/reducers/errors';
 import { paginationSelectors } from '../store/reducers/pagination';

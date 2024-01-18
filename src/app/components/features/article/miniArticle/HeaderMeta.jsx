@@ -6,7 +6,7 @@ import heart from '../../../../assets/heart.svg';
 
 import _ from './Article.module.scss';
 
-function HeaderMeta({ slug, title, hearts, tagList }) {
+function HeaderMeta({ slug, title, hearts, tagList, isFull }) {
   return (
     <Col className={_.header_meta}>
       <Row className={_.title_row}>
@@ -16,7 +16,7 @@ function HeaderMeta({ slug, title, hearts, tagList }) {
           trigger="hover"
           mouseEnterDelay={0.5}
         >
-          <Link to={`/articles/${slug}`} className={_.title}>
+          <Link to={isFull && `/articles/${slug}`} className={_.title}>
             {title}
           </Link>
         </Tooltip>
@@ -31,9 +31,9 @@ function HeaderMeta({ slug, title, hearts, tagList }) {
           const tagTrim = tag?.trim();
           return (
             tagTrim?.length > 0 && (
-              <Link to="/" key={nanoid()}>
-                <span>{tagTrim}</span>
-              </Link>
+              // <Link to="/" key={nanoid()}>
+              <span key={nanoid()}>{tagTrim}</span>
+              // </Link>
             )
           );
         })}

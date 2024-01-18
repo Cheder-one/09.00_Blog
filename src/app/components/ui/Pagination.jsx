@@ -8,7 +8,7 @@ import { bindActionCreators as bindActions } from 'redux';
 import {
   paginationActions,
   paginationSelectors,
-} from '../store/reducers/pagination';
+} from '../../store/reducers/pagination';
 
 function Pagination({ itemsCount, currentPage, pageSize, paginateAct }) {
   const handlePageChange = (page, size) => {

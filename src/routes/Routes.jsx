@@ -1,7 +1,7 @@
 import { Switch, Route } from 'react-router-dom';
 
-import { ArticlesPage } from '../pages';
-import NotFound from '../components/NotFound';
+import { ArticlesPage } from '../app/pages';
+import NotFound from '../app/components/ui/NotFound';
 
 function Routes() {
   return (

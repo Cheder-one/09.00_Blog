@@ -1,1 +1,2 @@
-export { default as DynamicArticleRender } from './DynamicArticleRender';
+export { default as ArticleSwitcher } from './ArticleSwitcher';
+export { default as LoginSwitcher } from './LoginSwitcher';

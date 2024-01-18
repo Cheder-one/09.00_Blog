@@ -2,8 +2,11 @@
 
 .article_card {
   width: 70vw;
-  margin-bottom: 26px;
+  margin: 26px 0;
   padding: 15px 15px 20px 15px;
+
+  border-radius: 5px;
+  background: $background-color-base;
 
   & > * {
     overflow: hidden;
@@ -14,8 +17,10 @@
     }
   }
 
-  border-radius: 5px;
-  background: $background-color-base;
+  &--full {
+    @extend .article_card;
+    margin-bottom: 64px;
+  }
 }
 
 .title {
@@ -71,7 +76,8 @@
       color: $text-color-secondary;
 
       span {
-        padding: 0 4px;
+        padding: 0 6px;
+        cursor: pointer;
       }
 
       & > * {
@@ -110,7 +116,7 @@
 
       .date {
         color: $text-color-secondary;
-        @include font-size-sm-12px;
+        @include font-size-sm_12px;
       }
     }
 
@@ -130,5 +136,10 @@
   .text {
     width: 75%;
     max-height: 50px;
+
+    &--full {
+      @extend .text;
+      color: $text-color-secondary;
+    }
   }
 }

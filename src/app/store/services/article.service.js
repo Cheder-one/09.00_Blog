@@ -1,4 +1,4 @@
-import ServiceError from '../../utils/ServiceError';
+import ServiceError from '../../../utils/ServiceError';
 
 import api from './api.service';
 

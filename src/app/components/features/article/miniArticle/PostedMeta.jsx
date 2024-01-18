@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../../utils';
+import { formatDate } from '../../../../../utils';
 
 import _ from './Article.module.scss';
 

@@ -1,5 +1,8 @@
+import { Flex } from 'antd';
+
 function LoginPage() {
-  return null;
+  // return <Flex justify='center'>
+  // </Flex>
 }
 
 export default LoginPage;

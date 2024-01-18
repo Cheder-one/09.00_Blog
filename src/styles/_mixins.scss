@@ -23,13 +23,49 @@
   line-height: 28px; /* 140% */
 }
 
-@mixin font-size-sm-12px {
+@mixin font-size-sm_12px {
   /* @font-size-sm: 12px */
   font-family: Inter;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 22px; /* 183.333% */
+}
+
+@mixin font-size-regular_12px-20px {
+  /* Regular / 12px | 20 px */
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+@mixin font-size-regular_14px-22px {
+  /* Regular / 14px | 22px */
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 157.143% */
+}
+
+@mixin font-size-regular_16px-24px {
+  /* Regular / 16 px | 24 px */
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+@mixin font-size-semibold_20px-28px {
+  /* Semibold / 20 px | 28 px */
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 28px; /* 140% */
 }
 
 @mixin truncated-text($line-count) {
@@ -49,4 +85,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+}
+
+@mixin form-box {
+  border-radius: 6px;
+  border: 1px solid $grey-grey-5;
+  background: $grey-grey-1;
+  box-shadow:
+    0px 0.609px 2.933px 0px rgba(0, 0, 0, 0.02),
+    0px 1.463px 7.049px 0px rgba(0, 0, 0, 0.03),
+    0px 2.755px 13.273px 0px rgba(0, 0, 0, 0.04),
+    0px 4.914px 23.676px 0px rgba(0, 0, 0, 0.04),
+    0px 9.191px 44.284px 0px rgba(0, 0, 0, 0.05),
+    0px 22px 106px 0px rgba(0, 0, 0, 0.07);
 }
