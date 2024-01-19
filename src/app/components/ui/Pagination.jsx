@@ -13,7 +13,7 @@ import {
 function Pagination({ itemsCount, currentPage, pageSize, paginateAct }) {
   const handlePageChange = (page, size) => {
     paginateAct.updated(page, size);
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -24,7 +24,7 @@ function Pagination({ itemsCount, currentPage, pageSize, paginateAct }) {
           current={currentPage}
           pageSize={pageSize}
           defaultCurrent={1}
-          showQuickJumper
+          showSizeChanger
           pageSizeOptions={['5', '10', '20', '50', '100', '500']}
           onChange={handlePageChange}
         />

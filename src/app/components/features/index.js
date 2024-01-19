@@ -1,6 +1,6 @@
 import Article from './article/miniArticle/Article';
 import ArticleList from './articleList/ArticleList';
-import LoginForm from './forms/login/LoginForm';
-import RegisterForm from './forms/register/RegisterForm';
+import LoginForm from './form/login/LoginForm';
+import RegisterForm from './form/register/RegisterForm';
 
 export { RegisterForm, LoginForm, Article, ArticleList };
