@@ -10,9 +10,9 @@ import {
   paginationSelectors,
 } from '../../store/reducers/pagination';
 
-function Pagination({ itemsCount, currentPage, pageSize, paginateAct }) {
+function Pagination({ itemsCount, currentPage, pageSize, updatePagination }) {
   const handlePageChange = (page, size) => {
-    paginateAct.updated(page, size);
+    updatePagination(page, size);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -47,7 +47,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => {
   const paginateAct = bindActions(paginationActions, dispatch);
-  return { paginateAct };
+  return { ...paginateAct };
 };
 
 export default connect(mapState, mapDispatch)(Pagination);

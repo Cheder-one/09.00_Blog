@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { articleService as articlesApi } from '../services/index';
+import { articleService } from '../services/index';
 
 import { handleError } from './helpers';
 
@@ -52,7 +52,7 @@ export const articleActions = {
   setArticlesChunk: (params) => async (dispatch) => {
     dispatch(requested());
     try {
-      const data = await articlesApi.loadChunk(params);
+      const data = await articleService.loadChunk(params);
       dispatch(received(data));
     } catch (error) {
       callHandleError(error, dispatch);
@@ -61,7 +61,7 @@ export const articleActions = {
   setArticleOne: (slug) => async (dispatch) => {
     dispatch(requested());
     try {
-      const data = await articlesApi.loadOne(slug);
+      const data = await articleService.loadOne(slug);
       dispatch(receivedOne(data));
     } catch (error) {
       callHandleError(error, dispatch);

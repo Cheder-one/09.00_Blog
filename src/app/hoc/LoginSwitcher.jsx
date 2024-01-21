@@ -5,7 +5,13 @@ import { LoginForm, RegisterForm } from '../components/features';
 function LoginSwitcher() {
   const { loginType } = useParams();
 
-  return loginType === 'sign-in' ? <LoginForm /> : <RegisterForm />;
+  switch (loginType) {
+    case 'sign-in':
+      return <LoginForm />;
+    case 'sign-up':
+      return <RegisterForm />;
+    default:
+  }
 }
 
 export default LoginSwitcher;

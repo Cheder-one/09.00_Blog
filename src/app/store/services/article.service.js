@@ -21,19 +21,19 @@ const articleService = {
       throw new ServiceError(error, info);
     }
   },
-  create: async (data) => {
+  create: async (body) => {
     try {
-      const response = await api.post('/articles', data);
-      return response;
+      const { data } = await api.post('/articles', body);
+      return data;
     } catch (error) {
       const info = 'Ошибка создания article';
       throw new ServiceError(error, info);
     }
   },
-  update: async (slug, data) => {
+  update: async (slug, body) => {
     try {
-      const response = await api.put(`/articles/${slug}`, data);
-      return response;
+      const { data } = await api.put(`/articles/${slug}`, body);
+      return data;
     } catch (error) {
       const info = `Ошибка обновления article с ID ${slug}`;
       throw new ServiceError(error, info);
@@ -41,8 +41,8 @@ const articleService = {
   },
   delete: async (slug) => {
     try {
-      const response = await api.delete(`/articles/${slug}`);
-      return response;
+      const { data } = await api.delete(`/articles/${slug}`);
+      return data;
     } catch (error) {
       const info = `Ошибка удаления article с ID ${slug}`;
       throw new ServiceError(error, info);

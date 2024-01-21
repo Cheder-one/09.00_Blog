@@ -1,7 +1,8 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Image } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { formatDate } from '../../../../../utils';
+import smileSrc from '../../../../assets/smiley-cyrus.jpg';
 
 import _ from './Article.module.scss';
 
@@ -17,7 +18,13 @@ function PostedMeta({ date, image, username }) {
 
       <Col>
         <Link to={`/profiles/:${username}`}>
-          <img src={image} alt="profile" className={_.photo} />
+          <Image
+            src={image}
+            alt="profile"
+            preview={false}
+            className={_.photo}
+            fallback={smileSrc}
+          />
         </Link>
       </Col>
     </Row>

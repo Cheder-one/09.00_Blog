@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://blog.kata.academy/api/';
+
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
+    Authorization: `Token ${localStorage.getItem('token')}`,
   },
 });
 
