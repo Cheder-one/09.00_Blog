@@ -15,7 +15,7 @@ const errorsSlice = createSlice({
       state.entities[key] = value;
     },
     clear(state) {
-      state.articles = {};
+      state.entities = {};
     },
   },
 });
@@ -27,6 +27,11 @@ export const setError = (key, value) => (dispatch) => {
 };
 export const clearErrors = () => (dispatch) => {
   dispatch(clear());
+};
+
+export const errorsActions = {
+  setError,
+  clearErrors,
 };
 
 export const errorsSelectors = {

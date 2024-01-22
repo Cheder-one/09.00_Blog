@@ -1,47 +1,53 @@
 import { Flex } from 'antd';
-import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { bindActionCreators as bindActions } from 'redux';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
-import { Header, NotFound } from './app/components/ui';
 import { ArticlesPage } from './app/pages';
-import { ArticleSwitcher, LoginSwitcher } from './app/hoc';
+import { NotFound } from './app/components/ui';
 import { authActions } from './app/store/reducers/auth';
+import { ArticleSwitcher } from './app/hoc';
+import { Header, ProfileEditForm } from './app/components/features';
+import PrivateRoute from './routes/PrivateRoute';
+import { LoginRoutes } from './routes';
 
-const { checkAuth } = authActions;
+// TODO Перейти на Router-v6
 
-function App() {
-  const dispatch = useDispatch();
-  // TODO Реализовать Skeleton || Loader
-  // TODO Перейти на Router-v6
+// TODO Настроить Приватный route
+// TODO Реализовать PopUp при ошибке в форме в ответе сервера
+// TODO Добавлять ошибку в ошибки полей
 
-  /**
-   // TODO Сохранять JWT в localStorage при получении
-   // TODO При загрузке проверять JWT
-   Если токен действителен, разрешите доступ к закрытым страницам. 
-   Если токен отсутствует или недействителен, перенаправьте на авторизацию.
-   // TODO Удалять JWT из localStorage при log-out
-   
-   */
-
+function App({ checkAuth }) {
   useEffect(() => {
-    dispatch(checkAuth());
+    checkAuth();
   }, []);
 
   return (
     <>
-      <Header logoTitle="Realworld Blog" />
+      <Header />
       <Flex justify="center">
         <Switch>
-          <Route path="/articles/:slug?" component={ArticleSwitcher} />
-          <Route path="/:loginType" component={LoginSwitcher} />
-
           <Route path="/" exact component={ArticlesPage} />
-          <Route component={NotFound} />
+          <Route path="/login" component={LoginRoutes} />
+          <Route path="/articles/:slug?" component={ArticleSwitcher} />
+          <PrivateRoute path="/profile" component={ProfileEditForm} />
+          <Route path="/404" component={NotFound} />
+          <Redirect to="/404" />;
         </Switch>
       </Flex>
     </>
   );
 }
 
-export default App;
+const mapState = (state) => ({
+  // isArticlesLoading: articleSelectors.isLoading(state),
+});
+
+const mapDispatch = (dispatch) => {
+  const authAct = bindActions(authActions, dispatch);
+  return { ...authAct };
+};
+
+export default connect(mapState, mapDispatch)(App);

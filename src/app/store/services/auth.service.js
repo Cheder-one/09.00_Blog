@@ -26,6 +26,7 @@ const userService = {
   },
   checkAuth: async () => {
     try {
+      if (!localStorage.getItem('token')) return null;
       const { data } = await api.get('/user');
       return data;
     } catch (error) {

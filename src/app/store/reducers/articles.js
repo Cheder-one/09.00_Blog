@@ -21,11 +21,11 @@ const articlesSlice = createSlice({
   name: ARTICLES,
   initialState,
   reducers: {
-    received: (state, action) => {
+    accepted: (state, action) => {
       state.chunk.entities = action.payload;
       state.chunk.isLoading = false;
     },
-    receivedOne: (state, action) => {
+    acceptedOne: (state, action) => {
       state.one.entities = action.payload;
       state.one.isLoading = false;
     },
@@ -34,18 +34,17 @@ const articlesSlice = createSlice({
       state.chunk.isLoading = true;
       state.one.isLoading = true;
     },
-    requestFailed: (state) => {
-      state.chunk.isLoading = false;
-      state.one.isLoading = false;
+    failed: (state) => {
+      // state.chunk.isLoading = false;
+      // state.one.isLoading = false;
     },
   },
 });
 
-const { received, receivedOne, requested, requestFailed } =
-  articlesSlice.actions;
+const { accepted, acceptedOne, requested, failed } = articlesSlice.actions;
 
 const callHandleError = (error, dispatch) => {
-  dispatch(handleError(error, requestFailed, ARTICLES));
+  dispatch(handleError(error, failed, ARTICLES));
 };
 
 export const articleActions = {
@@ -53,7 +52,7 @@ export const articleActions = {
     dispatch(requested());
     try {
       const data = await articleService.loadChunk(params);
-      dispatch(received(data));
+      dispatch(accepted(data));
     } catch (error) {
       callHandleError(error, dispatch);
     }
@@ -62,7 +61,7 @@ export const articleActions = {
     dispatch(requested());
     try {
       const data = await articleService.loadOne(slug);
-      dispatch(receivedOne(data));
+      dispatch(acceptedOne(data));
     } catch (error) {
       callHandleError(error, dispatch);
     }

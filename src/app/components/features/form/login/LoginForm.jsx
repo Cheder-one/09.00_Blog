@@ -28,51 +28,53 @@ function LoginForm({ loginUser }) {
   };
 
   return (
-    <Flex className={_.wrapper} id="login-form" justify="center">
-      <Form
-        className={_.login_form}
-        layout="vertical"
-        onFinish={handleSubmit(onSubmit)}
-      >
-        <h3 className={_.title}>Sign In</h3>
-        <div className={_.inputs_box}>
-          <FormController
-            name="email"
-            label="Email address"
-            control={control}
-            rules={emailCheck}
-            errors={errors}
-          >
-            <Input id="email" placeholder="Email address" />
-          </FormController>
-          <FormController
-            name="password"
-            label="Password"
-            control={control}
-            rules={passwordCheck}
-            errors={errors}
-          >
-            <Input.Password
-              id="password"
-              type="password"
-              placeholder="Password"
-            />
-          </FormController>
-        </div>
-
-        <div className={_.submit_box}>
-          <Button htmlType="submit" type="primary" block>
-            Create
-          </Button>
-          <div className={_.have_account}>
-            Don’t have an account?
-            <Link className={_.toggle_login} to="/sign-up">
-              Sign Up
-            </Link>
+    <div className={_.wrapper}>
+      <Flex className={_.container} id="login-form" justify="center">
+        <Form
+          className={_.login_form}
+          layout="vertical"
+          onFinish={handleSubmit(onSubmit)}
+        >
+          <h3 className={_.title}>Sign In</h3>
+          <div className={_.inputs_box}>
+            <FormController
+              name="email"
+              label="Email address"
+              control={control}
+              rules={emailCheck}
+              errors={errors}
+            >
+              <Input id="email" placeholder="Email address" />
+            </FormController>
+            <FormController
+              name="password"
+              label="Password"
+              control={control}
+              rules={passwordCheck}
+              errors={errors}
+            >
+              <Input.Password
+                id="password"
+                type="password"
+                placeholder="Password"
+              />
+            </FormController>
           </div>
-        </div>
-      </Form>
-    </Flex>
+
+          <div className={_.submit_box}>
+            <Button htmlType="submit" type="primary" block>
+              Create
+            </Button>
+            <div className={_.have_account}>
+              Don’t have an account?
+              <Link className={_.toggle_login} to="/sign-up">
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        </Form>
+      </Flex>
+    </div>
   );
 }
 

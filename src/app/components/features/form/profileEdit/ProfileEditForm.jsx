@@ -4,47 +4,44 @@ import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators as bindActions } from 'redux';
 
-import _ from '../login/LoginForm.module.scss';
-import FormController from '../helpers/FormController';
 import { useScrollToElement } from '../../../../../hooks';
 import {
   nameCheck,
   emailCheck,
   passwordCheck,
   confirmPassCheck,
+  imageUrlCheck,
 } from '../validators';
-import { authActions } from '../../../../store/reducers/auth';
+import FormController from '../helpers/FormController';
+import _ from '../login/LoginForm.module.scss';
 
-function RegisterForm({ registerUser }) {
-  useScrollToElement('login-form');
+function ProfileEditForm() {
+  useScrollToElement('profile-form');
   // prettier-ignore
   const { watch, control, handleSubmit, formState: {errors} } = useForm();
   const history = useHistory();
 
   const onSubmit = async (data) => {
+    console.log(data);
     const user = {
       username: data.name,
       email: data.email,
       password: data.password,
     };
-    registerUser(user)
-      .then(() => history.push('/sign-in'))
-      .catch((error) => alert(error.info));
-  };
-
-  const defineClass = (className) => {
-    return _[`${className}${errors.checkbox ? '--error' : ''}`];
+    // registerUser(user)
+    // .then(() => history.push('/sign-in'))
+    // .catch((error) => alert(error.info));
   };
 
   return (
     <div className={_.wrapper}>
-      <Flex className={_.container} id="login-form" justify="center">
+      <Flex className={_.container} id="profile-form" justify="center">
         <Form
           className={_.login_form}
           layout="vertical"
           onFinish={handleSubmit(onSubmit)}
         >
-          <h3 className={_.title}>Create new account</h3>
+          <h3 className={_.title}>Edit Profile</h3>
           <div className={_.inputs_box}>
             <FormController
               name="name"
@@ -67,7 +64,7 @@ function RegisterForm({ registerUser }) {
 
             <FormController
               name="password"
-              label="Password"
+              label="New password"
               control={control}
               rules={passwordCheck}
               errors={errors}
@@ -75,50 +72,24 @@ function RegisterForm({ registerUser }) {
               <Input.Password
                 id="password"
                 type="password"
-                placeholder="Password"
+                placeholder="New password"
               />
             </FormController>
             <FormController
-              name="passRepeat"
-              label="Repeat Password"
+              name="image"
+              label="Avatar image (url)"
               control={control}
-              rules={confirmPassCheck(watch('password'))}
+              rules={imageUrlCheck}
               errors={errors}
             >
-              <Input.Password
-                id="passRepeat"
-                type="password"
-                placeholder="Password"
-              />
-            </FormController>
-          </div>
-
-          <div className={_.agreement_box}>
-            <Divider />
-            <FormController
-              name="agreement"
-              className={defineClass('checkbox_wrapper')}
-              control={control}
-              rules={{ required: true }}
-              errors={errors}
-              hasFeedback
-            >
-              <Checkbox checked={watch('agreement')}>
-                I agree to the processing of my personal information
-              </Checkbox>
+              <Input id="image" placeholder="Avatar image" />
             </FormController>
           </div>
 
           <div className={_.submit_box}>
             <Button htmlType="submit" type="primary" block>
-              Create
+              Save
             </Button>
-            <div className={_.have_account}>
-              Already have an account?
-              <Link className={_.toggle_login} to="/sign-in/">
-                Sign In
-              </Link>
-            </div>
           </div>
         </Form>
       </Flex>
@@ -126,13 +97,4 @@ function RegisterForm({ registerUser }) {
   );
 }
 
-const mapState = (state) => ({
-  // name: reducerSelectors.getStoreState(state)
-});
-
-const mapDispatch = (dispatch) => {
-  const authAct = bindActions(authActions, dispatch);
-  return { ...authAct };
-};
-
-export default connect(mapState, mapDispatch)(RegisterForm);
+export default ProfileEditForm;

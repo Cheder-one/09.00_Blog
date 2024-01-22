@@ -18,6 +18,12 @@ export const emailCheck = {
   required: 'Email must be valid',
   pattern: { value: /\S+@\S+\.\S+/, message: 'Email must be valid' },
 };
+export const imageUrlCheck = {
+  pattern: {
+    value: /^(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))$/i,
+    message: 'URL must be valid',
+  },
+};
 
 export const passwordCheck = {
   required: 'Password needs to be at least 6 characters',

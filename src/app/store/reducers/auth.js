@@ -6,7 +6,7 @@ import { handleError } from './helpers';
 
 const initialState = {
   user: null,
-  isLoading: true,
+  isLoaded: false,
   isAuthenticated: false,
 };
 
@@ -18,11 +18,11 @@ const authSlice = createSlice({
   reducers: {
     registerSuccess: (state, action) => {
       state.user = action.payload.user;
-      state.isLoading = false;
+      state.isLoaded = true;
     },
     loginSuccess: (state, action) => {
       state.user = action.payload.user;
-      state.isLoading = false;
+      state.isLoaded = true;
       state.isAuthenticated = true;
     },
     logout: (state) => {
@@ -31,19 +31,19 @@ const authSlice = createSlice({
     },
 
     requested: (state) => {
-      state.isLoading = true;
+      state.isLoaded = true;
     },
-    requestFailed: (state) => {
-      state.isLoading = false;
+    failed: (state) => {
+      state.isLoaded = false;
     },
   },
 });
 
-const { registerSuccess, loginSuccess, logout, requested, requestFailed } =
+const { registerSuccess, loginSuccess, logout, requested, failed } =
   authSlice.actions;
 
 const callHandleError = (error, dispatch) => {
-  dispatch(handleError(error, requestFailed, AUTH));
+  dispatch(handleError(error, failed, AUTH));
 };
 
 export const authActions = {
@@ -74,7 +74,8 @@ export const authActions = {
     dispatch(requested());
     try {
       const data = await authService.checkAuth();
-      dispatch(loginSuccess(data));
+      if (data?.user) dispatch(loginSuccess(data));
+      if (!data?.user) dispatch(failed());
     } catch (error) {
       dispatch(logout());
     }
@@ -88,7 +89,7 @@ export const authActions = {
 
 export const authSelectors = {
   user: (state) => state[AUTH].user,
-  isLoading: (state) => state[AUTH].isLoading,
+  isLoaded: (state) => state[AUTH].isLoaded,
   isAuthenticated: (state) => state[AUTH].isAuthenticated,
 };
 

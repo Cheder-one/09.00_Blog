@@ -2,21 +2,25 @@ import { Col } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators as bindActions } from 'redux';
+import { Redirect } from 'react-router-dom';
 
 import { Pagination } from '../components/ui';
 import { getPaginateParams } from '../../utils';
 import { ArticleList } from '../components/features';
-import { errorsSelectors } from '../store/reducers/errors';
+import { errorsActions, errorsSelectors } from '../store/reducers/errors';
 import { paginationSelectors } from '../store/reducers/pagination';
 import { articleActions, articleSelectors } from '../store/reducers/articles';
+import { useScrollTop } from '../../hooks';
 
 function ArticlesPage({
   articlesChunk,
   pagination,
   errors,
+  clearErrors,
   isLoading,
   setArticlesChunk,
 }) {
+  useScrollTop();
   const { articles, articlesCount } = articlesChunk;
 
   useEffect(() => {
@@ -24,13 +28,15 @@ function ArticlesPage({
     setArticlesChunk(params);
   }, [pagination]);
 
-  return !isLoading && !errors.articles ? (
+  return (
     <Col>
-      <ArticleList articles={articles} />
+      <ArticleList
+        articles={articles}
+        isLoading={isLoading}
+        pageSize={pagination.pageSize}
+      />
       <Pagination itemsCount={articlesCount} />
     </Col>
-  ) : (
-    <h1>Loading...</h1>
   );
 }
 
@@ -43,7 +49,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => {
   const articleAct = bindActions(articleActions, dispatch);
-  return { ...articleAct };
+  const errorActs = bindActions(errorsActions, dispatch);
+  return { ...articleAct, ...errorActs };
 };
 
 export default connect(mapState, mapDispatch)(ArticlesPage);

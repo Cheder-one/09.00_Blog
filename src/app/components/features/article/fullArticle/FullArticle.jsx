@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { connect } from 'react-redux';
@@ -8,22 +8,39 @@ import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
-import { errorsSelectors } from '../../../../store/reducers/errors';
+import {
+  errorsActions,
+  errorsSelectors,
+} from '../../../../store/reducers/errors';
+import { ArticleSkeleton } from '../../../ui';
+import { useNotFound } from '../../../../../hooks';
 
-function FullArticle({ articleOne, isLoadingOne, setArticleOne, errors }) {
+function FullArticle({
+  articleOne,
+  isLoadingOne,
+  setArticleOne,
+  errors,
+  clearErrors,
+}) {
   const { slug } = useParams();
 
   useEffect(() => {
     setArticleOne(slug);
   }, []);
 
-  return (
-    !isLoadingOne &&
-    !errors.articles && (
-      <div>
-        <Article key={articleOne.slug} article={articleOne} isFull />
-      </div>
-    )
+  useNotFound(errors.articles);
+
+  return !isLoadingOne ? (
+    <div>
+      <Article
+        key={articleOne?.slug}
+        article={articleOne}
+        errors={errors}
+        isFull
+      />
+    </div>
+  ) : (
+    <ArticleSkeleton />
   );
 }
 
@@ -35,7 +52,8 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => {
   const articleAct = bindActions(articleActions, dispatch);
-  return { ...articleAct };
+  const errorActs = bindActions(errorsActions, dispatch);
+  return { ...articleAct, ...errorActs };
 };
 
 export default connect(mapState, mapDispatch)(FullArticle);

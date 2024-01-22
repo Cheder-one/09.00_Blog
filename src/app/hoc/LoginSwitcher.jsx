@@ -1,17 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect, Route, Switch } from 'react-router-dom';
 
 import { LoginForm, RegisterForm } from '../components/features';
+import { NotFound } from '../components/ui';
 
 function LoginSwitcher() {
-  const { loginType } = useParams();
-
-  switch (loginType) {
-    case 'sign-in':
-      return <LoginForm />;
-    case 'sign-up':
-      return <RegisterForm />;
-    default:
-  }
+  return (
+    <Switch>
+      <Route path="/login/sign-in" exact component={LoginForm} />
+      <Route path="/login/sign-up" exact component={RegisterForm} />
+      <Route component={NotFound} />
+    </Switch>
+  );
 }
 
 export default LoginSwitcher;
