@@ -18,6 +18,12 @@ const apiService = {
   post(url, data) {
     return api.post(url, data);
   },
+  put(url, data) {
+    return api.put(url, data);
+  },
+  delete(url, data) {
+    return api.delete(url, data);
+  },
 };
 
 export default apiService;

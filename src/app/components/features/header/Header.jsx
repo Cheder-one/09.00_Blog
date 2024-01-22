@@ -5,21 +5,13 @@ import { bindActionCreators as bindActions } from 'redux';
 
 import { paginationActions } from '../../../store/reducers/pagination';
 import { authSelectors } from '../../../store/reducers/auth';
-import { HeaderSkeleton } from '../../ui';
 
 import _ from './Header.module.scss';
-import HeaderAuth from './HeaderAuth';
-import HeaderNotAuth from './HeaderNonAuth';
+import HeaderContent from './HeaderContent';
 
 function Header({ updatePagination, isAuthenticated, isAuthLoaded }) {
   const handleClick = () => {
     updatePagination(1, 5);
-  };
-
-  const renderHeaderContent = () => {
-    if (isAuthenticated) return <HeaderAuth />;
-    if (!isAuthLoaded) return <HeaderNotAuth />;
-    return <HeaderSkeleton />;
   };
 
   return (
@@ -27,14 +19,21 @@ function Header({ updatePagination, isAuthenticated, isAuthLoaded }) {
       <Link to="/" className={_.logo_title} onClick={handleClick}>
         <span>Realworld Blog</span>
       </Link>
-      {renderHeaderContent()}
+      <HeaderContent {...{ isAuthenticated, isAuthLoaded }} />
     </div>
   );
 }
 
 Header.propTypes = {
   updatePagination: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf([null]),
+  ]),
+};
+
+Header.defaultProps = {
+  isAuthenticated: null,
 };
 
 const mapState = (state) => ({

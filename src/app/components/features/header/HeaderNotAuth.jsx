@@ -6,7 +6,7 @@ import { useScrollToElement } from '../../../../hooks';
 
 import _ from './Header.module.scss';
 
-function HeaderNonAuth() {
+function HeaderNotAuth() {
   const [clicked, setClicked] = useState();
   useScrollToElement('login-form', clicked);
 
@@ -26,4 +26,4 @@ function HeaderNonAuth() {
   );
 }
 
-export default HeaderNonAuth;
+export default HeaderNotAuth;

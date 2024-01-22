@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 
-function useScrollToElement(id, clicked) {
+function useScrollToElement(id, type = 'smooth') {
   useEffect(() => {
     const element = document.getElementById(id);
     if (!element) return;
     element.scrollIntoView({
-      behavior: 'smooth',
+      behavior: type,
       block: 'center',
       inline: 'nearest',
     });
-  }, [id, clicked]);
+  }, [id]);
 }
 
 export default useScrollToElement;

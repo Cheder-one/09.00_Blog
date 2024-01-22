@@ -12,10 +12,11 @@ import { authActions } from '../../../../store/reducers/auth';
 import _ from './LoginForm.module.scss';
 
 function LoginForm({ loginUser }) {
-  useScrollToElement('login-form');
-  // prettier-ignore
-  const {  control, handleSubmit, formState: {errors} } = useForm();
+  const { control, handleSubmit, formState } = useForm();
+  const { errors } = formState;
   const history = useHistory();
+
+  useScrollToElement('login-form');
 
   const onSubmit = async (data) => {
     const user = {

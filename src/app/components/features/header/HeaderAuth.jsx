@@ -50,7 +50,7 @@ function HeaderAuth({ user, logoutUser }) {
 }
 
 const mapState = (state) => ({
-  user: authSelectors.user(state),
+  user: authSelectors.getUser(state),
   isAuthenticated: authSelectors.isAuthenticated(state),
 });
 

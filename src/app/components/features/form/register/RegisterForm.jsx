@@ -16,10 +16,11 @@ import {
 import { authActions } from '../../../../store/reducers/auth';
 
 function RegisterForm({ registerUser }) {
-  useScrollToElement('login-form');
-  // prettier-ignore
-  const { watch, control, handleSubmit, formState: {errors} } = useForm();
+  const { watch, control, handleSubmit, formState } = useForm();
   const history = useHistory();
+  const { errors } = formState;
+
+  useScrollToElement('login-form');
 
   const onSubmit = async (data) => {
     const user = {

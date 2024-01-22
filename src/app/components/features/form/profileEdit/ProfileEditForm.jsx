@@ -1,36 +1,45 @@
-import { Link, useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
 import { connect } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { Flex, Form, Input, Button } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
+import { useEffect } from 'react';
 
-import { useScrollToElement } from '../../../../../hooks';
 import {
   nameCheck,
   emailCheck,
   passwordCheck,
-  confirmPassCheck,
   imageUrlCheck,
 } from '../validators';
-import FormController from '../helpers/FormController';
 import _ from '../login/LoginForm.module.scss';
+import FormController from '../helpers/FormController';
+import { useScrollToElement } from '../../../../../hooks';
+import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
-function ProfileEditForm() {
-  useScrollToElement('profile-form');
-  // prettier-ignore
-  const { watch, control, handleSubmit, formState: {errors} } = useForm();
+function ProfileEditForm({ user, updateUser }) {
+  const { control, handleSubmit, setValue, formState } = useForm();
+  const { errors } = formState;
   const history = useHistory();
 
+  useScrollToElement('profile-form', 'instant');
+
+  useEffect(() => {
+    setValue('name', user.username);
+    setValue('email', user.email);
+    setValue('image', user.image);
+  }, [user]);
+
   const onSubmit = async (data) => {
-    console.log(data);
-    const user = {
+    const userEdit = {
       username: data.name,
       email: data.email,
+      bio: 'Lorem ipsum dolor.',
+      image: data.image,
       password: data.password,
     };
-    // registerUser(user)
-    // .then(() => history.push('/sign-in'))
-    // .catch((error) => alert(error.info));
+    updateUser(userEdit)
+      .then(() => history.push('/'))
+      .catch((error) => alert(error.info));
   };
 
   return (
@@ -85,7 +94,6 @@ function ProfileEditForm() {
               <Input id="image" placeholder="Avatar image" />
             </FormController>
           </div>
-
           <div className={_.submit_box}>
             <Button htmlType="submit" type="primary" block>
               Save
@@ -97,4 +105,13 @@ function ProfileEditForm() {
   );
 }
 
-export default ProfileEditForm;
+const mapState = (state) => ({
+  user: authSelectors.getUser(state),
+});
+
+const mapDispatch = (dispatch) => {
+  const authAct = bindActions(authActions, dispatch);
+  return { ...authAct };
+};
+
+export default connect(mapState, mapDispatch)(ProfileEditForm);

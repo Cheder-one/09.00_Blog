@@ -1,21 +1,27 @@
-import { Flex, Spin } from 'antd';
+import { Spin } from 'antd';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 
 function Loader({ css }) {
-  const StyledLoader = styled(Flex)`
-    height: 100vh;
+  const Wrapper = styled.div`
     width: 100%;
-    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
     z-index: 100;
-    background-color: #ebeef3;
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 1);
     ${css}
   `;
 
   return (
-    <StyledLoader justify="center" align="center">
+    <Wrapper>
       <Spin size="large" />
-    </StyledLoader>
+    </Wrapper>
   );
 }
 

@@ -34,6 +34,15 @@ const userService = {
       throw new ServiceError(error, info);
     }
   },
+  update: async (body) => {
+    try {
+      const { data } = await api.put('/user', body);
+      return data;
+    } catch (error) {
+      const info = 'Ошибка при обновлении профиля';
+      throw new ServiceError(error, info);
+    }
+  },
 };
 
 export default userService;

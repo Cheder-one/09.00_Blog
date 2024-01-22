@@ -9,19 +9,29 @@ export const nameCheck = {
     message: 'Name must be less than 20 characters',
   },
   pattern: {
-    value: /^[a-zA-Zа-яА-Я0-9]+$/,
-    message: 'Only letters and numbers',
+    value: /^[a-zа-я0-9]+$/,
+    message: 'Only lowercase letters and numbers',
   },
 };
 
 export const emailCheck = {
   required: 'Email must be valid',
-  pattern: { value: /\S+@\S+\.\S+/, message: 'Email must be valid' },
-};
-export const imageUrlCheck = {
   pattern: {
-    value: /^(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))$/i,
-    message: 'URL must be valid',
+    value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+    message: 'Email must be valid',
+  },
+};
+
+export const imageUrlCheck = {
+  validate: (url) => {
+    return new Promise((resolve) => {
+      if (!url) resolve(true);
+
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve('URL must be valid');
+      img.src = url;
+    });
   },
 };
 
