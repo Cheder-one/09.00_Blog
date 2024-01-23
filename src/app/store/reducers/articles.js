@@ -68,10 +68,10 @@ export const articleActions = {
     }
   },
 
-  createArticle: () => async (dispatch) => {
+  createArticle: (article) => async (dispatch) => {
     dispatch(requested());
     try {
-      const data = await articleService.create();
+      const data = await articleService.create({ article });
       dispatch(successOne(data));
     } catch (error) {
       callHandleError(error, dispatch);

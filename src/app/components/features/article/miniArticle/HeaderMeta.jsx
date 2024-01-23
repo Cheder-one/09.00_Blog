@@ -7,6 +7,7 @@ import heart from '../../../../assets/heart.svg';
 import _ from './Article.module.scss';
 
 function HeaderMeta({ slug, title, hearts, tagList, isFull }) {
+  console.log(tagList);
   return (
     <Col className={_.header_meta}>
       <Row className={_.title_row}>

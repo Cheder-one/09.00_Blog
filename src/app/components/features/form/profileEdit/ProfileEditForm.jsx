@@ -44,7 +44,7 @@ function ProfileEditForm({ user, updateUser }) {
   };
 
   return (
-    <div css={{ height: '100vh' }}>
+    <div className={_.page}>
       <div className={_.wrapper} id="profile-form">
         <Flex className={_.container} justify="center">
           <Form

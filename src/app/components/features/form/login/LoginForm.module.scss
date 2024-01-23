@@ -6,6 +6,8 @@ $wrap-m: 60px;
 }
 
 .wrapper {
+  display: flex;
+
   padding-top: $py-1;
   padding-bottom: calc($wrap-m/2);
   margin: calc($wrap-m - $py-1) 0;
@@ -88,6 +90,7 @@ $wrap-m: 60px;
         height: fit-content;
         margin-bottom: 8px;
         padding: 8px 16px;
+
         color: $grey-grey-1;
         background-color: $daybreak-blue-blue-6;
         @include font-size-regular_16px-24px;

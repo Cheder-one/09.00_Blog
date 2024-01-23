@@ -51,3 +51,19 @@ export const confirmPassCheck = (prevPass) => ({
   required: 'Passwords must match',
   validate: (pass) => prevPass === pass || 'Passwords must match',
 });
+
+export const tagsCheck = {
+  required: 'Tag must be at least 1 characters',
+  minLength: {
+    value: 1,
+    message: 'Tag must be at least 1 characters',
+  },
+  maxLength: {
+    value: 20,
+    message: 'Tag must be less than 20 characters',
+  },
+  pattern: {
+    value: /^[a-zа-я0-9+-_@\s]+$/,
+    message: 'Only lowercase letters and numbers',
+  },
+};
