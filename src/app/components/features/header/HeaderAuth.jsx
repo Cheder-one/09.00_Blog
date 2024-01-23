@@ -7,10 +7,13 @@ import { bindActionCreators as bindActions } from 'redux';
 import smileSrc from '../../../assets/smiley-cyrus.jpg';
 import { paginationActions } from '../../../store/reducers/pagination';
 import { authActions, authSelectors } from '../../../store/reducers/auth';
+import { useScrollToElement } from '../../../../hooks';
 
 import _ from './Header.module.scss';
 
 function HeaderAuth({ user, logoutUser }) {
+  const [setClickedProfile] = useScrollToElement('profile-form');
+  const [setClickedArticle] = useScrollToElement('article-form');
   const history = useHistory();
 
   const handleLogout = () => {
@@ -19,20 +22,16 @@ function HeaderAuth({ user, logoutUser }) {
     window.location.reload();
   };
 
-  const handleCreateArticle = () => {
-    console.log('create article');
-  };
-
   return (
     <div className={_.auth}>
       <Link
         to="/new-article"
         className={_.create_article}
-        onClick={handleCreateArticle}
+        onClick={setClickedArticle}
       >
         <button type="button">Create article</button>
       </Link>
-      <Link className={_.profile} to="/profile">
+      <Link className={_.profile} to="/profile" onClick={setClickedProfile}>
         <span>{user.username}</span>
         <Image
           width={46}

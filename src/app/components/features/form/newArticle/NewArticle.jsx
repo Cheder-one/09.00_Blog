@@ -18,13 +18,12 @@ function NewArticle({ createArticle }) {
   const { errors } = formState;
   const history = useHistory();
 
-  useScrollToElement('profile-form');
+  useScrollToElement('article-form');
 
   const onSubmit = async (data) => {
     const userEdit = {
       username: data.name,
       email: data.email,
-      bio: 'Lorem ipsum dolor.',
       image: data.image,
       password: data.password,
     };
@@ -34,49 +33,51 @@ function NewArticle({ createArticle }) {
   };
 
   return (
-    <div className={_.wrapper}>
-      <div className={_.container} id="profile-form">
-        <Form
-          className={_.login_form}
-          layout="vertical"
-          onFinish={handleSubmit(onSubmit)}
-        >
-          <h3 className={_.title}>Create new article</h3>
-          <div className={_.inputs_box}>
-            <FormController
-              name="title"
-              label="Title"
-              control={control}
-              rules={{}}
-              errors={errors}
-            >
-              <Input id="title" placeholder="Title" />
-            </FormController>
-            <FormController
-              name="description"
-              label="Short description"
-              control={control}
-              rules={{}}
-              errors={errors}
-            >
-              <Input id="description" placeholder="Description" />
-            </FormController>
-            <FormController
-              name="text"
-              label="Text"
-              control={control}
-              rules={{}}
-              errors={errors}
-            >
-              <Input id="text" placeholder="Text" />
-            </FormController>
-          </div>
-          <div className={_.submit_box}>
-            <Button htmlType="submit" type="primary" block>
-              Send
-            </Button>
-          </div>
-        </Form>
+    <div className={_.page}>
+      <div className={_.wrapper} id="article-form">
+        <div className={_.container}>
+          <Form
+            className={_.login_form}
+            layout="vertical"
+            onFinish={handleSubmit(onSubmit)}
+          >
+            <h3 className={_.title}>Create new article</h3>
+            <div className={_.inputs_box}>
+              <FormController
+                name="title"
+                label="Title"
+                control={control}
+                rules={{}}
+                errors={errors}
+              >
+                <Input id="title" placeholder="Title" />
+              </FormController>
+              <FormController
+                name="description"
+                label="Short description"
+                control={control}
+                rules={{}}
+                errors={errors}
+              >
+                <Input id="description" placeholder="Description" />
+              </FormController>
+              <FormController
+                name="text"
+                label="Text"
+                control={control}
+                rules={{}}
+                errors={errors}
+              >
+                <Input id="text" placeholder="Text" />
+              </FormController>
+            </div>
+            <div className={_.submit_box}>
+              <Button htmlType="submit" type="primary" block>
+                Send
+              </Button>
+            </div>
+          </Form>
+        </div>
       </div>
     </div>
   );
