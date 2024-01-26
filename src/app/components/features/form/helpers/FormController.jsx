@@ -9,6 +9,7 @@ function FormController({
   control,
   rules,
   errors,
+  message,
   children,
   className,
   hasFeedback,
@@ -18,9 +19,9 @@ function FormController({
       name={name}
       label={label}
       className={className}
-      help={errors[name]?.message}
-      validateStatus={errors[name] ? 'error' : 'success'}
+      help={errors?.[name]?.message || message}
       hasFeedback={hasFeedback}
+      validateStatus={errors?.[name] || message ? 'error' : 'success'}
     >
       <Controller
         name={name}
@@ -36,8 +37,10 @@ FormController.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   control: PropTypes.shape({}).isRequired,
-  rules: PropTypes.shape({}).isRequired,
-  errors: PropTypes.shape({}).isRequired,
+  rules: PropTypes.shape({}),
+  errors: PropTypes.shape({}),
+  message: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.element.isRequired,
   hasFeedback: PropTypes.bool,
 };
@@ -45,6 +48,10 @@ FormController.propTypes = {
 FormController.defaultProps = {
   label: '',
   hasFeedback: false,
+  rules: {},
+  errors: {},
+  message: '',
+  className: '',
 };
 
 export default FormController;

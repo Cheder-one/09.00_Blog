@@ -6,7 +6,6 @@ import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
 
 import _ from '../login/LoginForm.module.scss';
 import FormController from '../helpers/FormController';
-import { useScrollToElement } from '../../../../../hooks';
 import {
   nameCheck,
   emailCheck,
@@ -17,12 +16,11 @@ import { authActions } from '../../../../store/reducers/auth';
 
 function RegisterForm({ registerUser }) {
   const { watch, control, handleSubmit, formState } = useForm();
+  const { errors, isSubmitSuccessful } = formState;
   const history = useHistory();
-  const { errors } = formState;
-
-  useScrollToElement('login-form');
 
   const onSubmit = async (data) => {
+    if (isSubmitSuccessful) return;
     const user = {
       username: data.name,
       email: data.email,
@@ -54,7 +52,7 @@ function RegisterForm({ registerUser }) {
                 rules={nameCheck}
                 errors={errors}
               >
-                <Input id="name" placeholder="Username" />
+                <Input id="name" placeholder="Username" autoFocus />
               </FormController>
               <FormController
                 name="email"

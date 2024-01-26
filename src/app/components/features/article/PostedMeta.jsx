@@ -1,8 +1,8 @@
 import { Col, Row, Image } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../../../utils';
-import smileSrc from '../../../../assets/smiley-cyrus.jpg';
+import { formatDate } from '../../../../utils';
+import smileSrc from '../../../assets/smiley-cyrus.jpg';
 
 import _ from './Article.module.scss';
 

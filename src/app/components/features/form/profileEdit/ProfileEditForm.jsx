@@ -14,15 +14,12 @@ import {
 } from '../validators';
 import _ from '../login/LoginForm.module.scss';
 import FormController from '../helpers/FormController';
-import { useScrollToElement } from '../../../../../hooks';
 import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
 function ProfileEditForm({ user, updateUser }) {
   const { control, handleSubmit, setValue, formState } = useForm();
-  const { errors } = formState;
+  const { errors, isSubmitSuccessful } = formState;
   const history = useHistory();
-
-  useScrollToElement('profile-form');
 
   useEffect(() => {
     setValue('name', user.username);
@@ -31,6 +28,7 @@ function ProfileEditForm({ user, updateUser }) {
   }, [user]);
 
   const onSubmit = async (data) => {
+    if (isSubmitSuccessful) return;
     const userEdit = {
       username: data.name,
       email: data.email,
@@ -61,7 +59,7 @@ function ProfileEditForm({ user, updateUser }) {
                 rules={nameCheck}
                 errors={errors}
               >
-                <Input id="name" placeholder="Username" />
+                <Input id="name" placeholder="Username" autoFocus />
               </FormController>
               <FormController
                 name="email"

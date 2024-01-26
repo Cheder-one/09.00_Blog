@@ -2,12 +2,11 @@ import { nanoid } from 'nanoid';
 import { Link } from 'react-router-dom';
 import { Col, Row, Tooltip } from 'antd';
 
-import heart from '../../../../assets/heart.svg';
+import heart from '../../../assets/heart.svg';
 
 import _ from './Article.module.scss';
 
 function HeaderMeta({ slug, title, hearts, tagList, isFull }) {
-  console.log(tagList);
   return (
     <Col className={_.header_meta}>
       <Row className={_.title_row}>
@@ -15,7 +14,7 @@ function HeaderMeta({ slug, title, hearts, tagList, isFull }) {
           title={title}
           arrow={false}
           trigger="hover"
-          mouseEnterDelay={0.5}
+          mouseEnterDelay={0.8}
         >
           <Link to={isFull && `/articles/${slug}`} className={_.title}>
             {title}
@@ -27,7 +26,7 @@ function HeaderMeta({ slug, title, hearts, tagList, isFull }) {
         </button>
       </Row>
 
-      <Row className={_.tags}>
+      <Row className={_.tag_list}>
         {tagList.map((tag) => {
           const tagTrim = tag?.trim();
           return (

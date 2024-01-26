@@ -168,3 +168,18 @@
   background-color: $color;
   color: $grey-grey-1;
 }
+
+@mixin default-bth-padding-center {
+  padding: 8px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin submit-bth-padding-center {
+  // height: 40px;
+  height: fit-content;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+}

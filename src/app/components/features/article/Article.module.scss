@@ -49,7 +49,6 @@
     .title {
       margin-right: 10px;
       margin-bottom: 4px;
-
       color: $info-color;
       @include h5-font-style;
       @include truncated-word();
@@ -67,8 +66,8 @@
       }
     }
 
-    .tags {
-      max-height: 50px;
+    .tag_list {
+      max-height: 45px;
       display: flex;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -130,17 +129,82 @@
 }
 
 .description {
-  margin-bottom: 20px;
-  @include truncated-word();
-  @include truncated-text(3);
+  height: 66px;
+  cursor: default;
+  flex-wrap: nowrap;
+
+  // @include truncated-word();
+  // @include truncated-text(3);
+
+  &--full {
+    @extend .description;
+    margin-bottom: 20px;
+  }
 
   .text {
     width: 75%;
-    max-height: 50px;
 
     &--full {
       @extend .text;
       color: $text-color-secondary;
+    }
+  }
+
+  .article_actions_col {
+    width: 150px;
+    margin: auto 0;
+    margin-left: auto;
+    padding-right: 5px;
+  }
+
+  .actions_row {
+    gap: 2px 8px;
+    flex-wrap: nowrap;
+    justify-content: end;
+
+    .delete_btn {
+      color: $error-color;
+      border-color: $error-color;
+      @include default-bth-padding-center;
+
+      &:hover {
+        border-color: $error-color;
+        @include default-bth-hover-style($error-color);
+      }
+    }
+
+    .edit_btn {
+      color: $success-color;
+      border-color: $success-color;
+      @include default-bth-padding-center;
+
+      &:hover {
+        border-color: $success-color;
+        @include default-bth-hover-style($success-color);
+      }
+    }
+  }
+}
+
+:global {
+  .ant-popover-inner {
+    width: 240px;
+    padding: 12px 16px !important;
+    color: $grey-grey-8 !important;
+  }
+
+  .ant-popconfirm-message {
+    margin-bottom: 12px !important;
+
+    .ant-popconfirm-description {
+      margin-top: 0 !important;
+    }
+  }
+
+  .ant-popconfirm-buttons {
+    button:last-child {
+      color: $grey-grey-1;
+      background-color: $daybreak-blue-blue-6;
     }
   }
 }

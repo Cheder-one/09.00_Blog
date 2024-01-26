@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { connect } from 'react-redux';
 
-import Article from '../miniArticle/Article';
+import Article from '../Article';
 import {
   articleActions,
   articleSelectors,
@@ -15,13 +15,7 @@ import {
 import { ArticleSkeleton } from '../../../ui';
 import { useNotFound } from '../../../../../hooks';
 
-function FullArticle({
-  articleOne,
-  isLoadingOne,
-  setArticleOne,
-  errors,
-  clearErrors,
-}) {
+function FullArticle({ articleOne, isLoadingOne, setArticleOne, errors }) {
   const { slug } = useParams();
 
   useEffect(() => {

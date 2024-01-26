@@ -1,44 +1,64 @@
 /** @jsxImportSource @emotion/react */
-import { Input, Button, Form, Col } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Input, Button, Form, Col } from 'antd';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { bindActionCreators as bindActions } from 'redux';
-import { useForm } from 'react-hook-form';
-import { filter } from 'lodash';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
-import { useScrollToElement } from '../../../../../hooks';
 import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
 import FormController from '../helpers/FormController';
+import { useScrollToElement } from '../../../../../hooks';
+import { descriptionCheck, textCheck, titleCheck } from '../validators';
+import { Loader } from '../../../ui';
 
-import _ from './NewArticle.module.scss';
+import _ from './ArticleForm.module.scss';
 import TagsList from './TagsList';
+import { useArticleDataOnEdit } from './helpers';
 
-function NewArticle({ createArticle }) {
-  const { control, unregister, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+function ArticleForm({
+  articleOne,
+  setArticleOne,
+  createArticle,
+  editArticle,
+  isLoadingOne,
+}) {
+  const { control, register, handleSubmit, setValue, formState } = useForm();
+  const { fields, append, remove } = useFieldArray({ control, name: 'tags' });
+  const { errors, isSubmitSuccessful } = formState;
+  const { slug } = useParams();
   const history = useHistory();
+  const isEdit = !!slug;
+
+  useEffect(() => {
+    if (isEdit) setArticleOne(slug);
+  }, []);
 
   useScrollToElement('article-form');
-
-  // TODO Предотвратить двойную отправку формы.
-
-  // TODO Validation всех полей
-  // TODO Валидация тегов useFieldArray?
+  useArticleDataOnEdit(isEdit, articleOne, setValue);
 
   const onSubmit = async (data) => {
+    if (isSubmitSuccessful) return;
     const article = {
+      body: data.text,
       title: data.title,
       description: data.description,
-      body: data.text,
-      tagList: filter(data, (v, key) => key.startsWith('tag_')),
+      tagList: data.tags.map((item) => item.tag),
     };
 
-    createArticle(article)
-      .then(() => history.push('/'))
-      .catch((error) => alert(error.info));
+    if (isEdit) {
+      editArticle(slug, article)
+        .then(() => history.replace(`/articles/${slug}`))
+        .catch((error) => alert(error.info));
+    } else {
+      createArticle(article)
+        .then(() => history.push('/'))
+        .catch((error) => alert(error.info));
+    }
   };
 
   return (
@@ -50,22 +70,24 @@ function NewArticle({ createArticle }) {
             layout="vertical"
             onFinish={handleSubmit(onSubmit)}
           >
-            <h3 className={_.title}>Create new article</h3>
+            <h3 className={_.title}>
+              {isEdit ? 'Edit article' : 'Create new article'}
+            </h3>
             <div className={_.inputs_box}>
               <FormController
                 name="title"
                 label="Title"
                 control={control}
-                rules={{}}
+                rules={titleCheck}
                 errors={errors}
               >
-                <Input id="title" placeholder="Title" />
+                <Input id="title" placeholder="Title" autoFocus />
               </FormController>
               <FormController
                 name="description"
                 label="Short description"
                 control={control}
-                rules={{}}
+                rules={descriptionCheck}
                 errors={errors}
               >
                 <Input id="description" placeholder="Description" />
@@ -74,10 +96,10 @@ function NewArticle({ createArticle }) {
                 name="text"
                 label="Text"
                 control={control}
-                rules={{}}
+                rules={textCheck}
                 errors={errors}
               >
-                <Input id="text" placeholder="Text" />
+                <Input.TextArea id="text" placeholder="Text" />
               </FormController>
 
               <div className={_.tags_box}>
@@ -85,8 +107,11 @@ function NewArticle({ createArticle }) {
                   <h4 className={_.tags_title}>Tags</h4>
                   <TagsList
                     className={_.tags_list}
-                    unregister={unregister}
+                    tags={fields}
                     control={control}
+                    register={register}
+                    append={append}
+                    remove={remove}
                     errors={errors}
                   />
                 </Col>
@@ -101,12 +126,14 @@ function NewArticle({ createArticle }) {
           </Form>
         </div>
       </div>
+      {isLoadingOne && isEdit && <Loader />}
     </div>
   );
 }
 
 const mapState = (state) => ({
   articleOne: articleSelectors.getOne(state),
+  isLoadingOne: articleSelectors.isLoadingOne(state),
 });
 
 const mapDispatch = (dispatch) => {
@@ -114,4 +141,4 @@ const mapDispatch = (dispatch) => {
   return { ...articlesAct };
 };
 
-export default connect(mapState, mapDispatch)(NewArticle);
+export default connect(mapState, mapDispatch)(ArticleForm);

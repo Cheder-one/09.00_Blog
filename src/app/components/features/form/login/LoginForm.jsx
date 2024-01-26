@@ -13,18 +13,18 @@ import _ from './LoginForm.module.scss';
 
 function LoginForm({ loginUser }) {
   const { control, handleSubmit, formState } = useForm({
-    mode: 'onChange',
     defaultValues: {
       email: 'username@gmail.com',
       password: 'username@gmail.com',
     },
   });
-  const { errors } = formState;
+  const { errors, isSubmitSuccessful } = formState;
   const history = useHistory();
 
   useScrollToElement('login-form');
 
   const onSubmit = async (data) => {
+    if (isSubmitSuccessful) return;
     const user = {
       email: data.email,
       password: data.password,
@@ -52,7 +52,7 @@ function LoginForm({ loginUser }) {
                 rules={emailCheck}
                 errors={errors}
               >
-                <Input id="email" placeholder="Email address" />
+                <Input id="email" placeholder="Email address" autoFocus />
               </FormController>
               <FormController
                 name="password"

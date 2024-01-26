@@ -1,7 +1,7 @@
 import { times } from 'lodash';
 
 import { ArticleSkeleton } from '../../ui';
-import Article from '../article/miniArticle/Article';
+import Article from '../article/Article';
 
 function ArticleList({ articles, isLoading, pageSize, errors }) {
   return (

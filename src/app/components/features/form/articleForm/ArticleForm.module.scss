@@ -48,6 +48,10 @@ $wrap-m: 34px;
     display: flex;
     flex-direction: column;
 
+    textarea {
+      height: 134px;
+    }
+
     .tags_box {
       gap: 16px;
 
@@ -67,13 +71,13 @@ $wrap-m: 34px;
             gap: 16px;
             align-items: start;
 
-            .delete_tag_btn {
+            .delete_btn {
               width: 100px;
-              padding: 8px 16px;
+              @include default-bth-padding-center;
 
-              display: flex;
-              align-items: center;
-              justify-content: center;
+              &:hover {
+                @include default-bth-hover-style($error-color);
+              }
             }
           }
         }
@@ -85,11 +89,7 @@ $wrap-m: 34px;
 
         & > button {
           width: 120px;
-          padding: 8px 16px;
-
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include default-bth-padding-center;
 
           color: $info-color;
           border-color: $info-color;
@@ -112,9 +112,7 @@ $wrap-m: 34px;
 
   .submit_btn {
     width: calc(100% + 16px);
-    height: 40px;
-    padding: 8px 16px;
-    margin-bottom: 8px;
+    @include submit-bth-padding-center;
 
     color: $grey-grey-1;
     background-color: $daybreak-blue-blue-6;

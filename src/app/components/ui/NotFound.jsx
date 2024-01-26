@@ -19,7 +19,7 @@ function NotFound() {
     <Wrapper id="not-found">
       <Result
         status="404"
-        title={<h2 css={{ fontFamily: 'monospace' }}>404</h2>}
+        title={<h2>404</h2>}
         subTitle="Запрашиваемая страница не найдена."
         extra={
           <Link to="/">

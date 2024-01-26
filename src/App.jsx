@@ -1,21 +1,28 @@
 import { Flex } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { ArticlesPage } from './app/pages';
-import { ArticleSwitcher } from './app/hoc';
 import { NotFound } from './app/components/ui';
 import { LoginRoutes, PrivateRoute } from './routes';
 import { authActions } from './app/store/reducers/auth';
-import { Header, NewArticle, ProfileEditForm } from './app/components/features';
+import {
+  Header,
+  ArticleForm,
+  ProfileEditForm,
+} from './app/components/features';
+import ArticleRoutes from './routes/ArticleRoutes';
 
 // TODO Перейти на Router-v6
+// NOTE Удалить данные входа
 
-// TODO Реализовать PopUp при ошибке в форме в ответе сервера
-// TODO Добавлять ошибку сервера в поле, если nick занят.
+// TODO Исправить баг HeaderSkeleton
+// TODO 401 | Ошибка обновления article
+
+// TODO Реализовать отображение пользовательских сообщений об ошибках
+// TODO Реализовать Like
 
 function App({ checkAuth }) {
   useEffect(() => {
@@ -29,8 +36,8 @@ function App({ checkAuth }) {
         <Switch>
           <Route path="/" exact component={ArticlesPage} />
           <Route path="/login" component={LoginRoutes} />
-          <Route path="/articles/:slug?" component={ArticleSwitcher} />
-          <PrivateRoute path="/new-article" component={NewArticle} />
+          <Route path="/articles" component={ArticleRoutes} />
+          <PrivateRoute path="/new-article" component={ArticleForm} />
           <PrivateRoute path="/profile" component={ProfileEditForm} />
           <Route path="/404" component={NotFound} />
           <Redirect to="/404" />;

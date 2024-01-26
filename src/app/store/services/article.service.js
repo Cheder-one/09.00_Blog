@@ -30,7 +30,7 @@ const articleService = {
       throw new ServiceError(error, info);
     }
   },
-  update: async (slug, body) => {
+  edit: async (slug, body) => {
     try {
       const { data } = await api.put(`/articles/${slug}`, body);
       return data;

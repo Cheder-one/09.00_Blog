@@ -85,16 +85,12 @@ $wrap-m: 60px;
   }
 
   .submit_box {
-    :global {
-      .ant-btn {
-        height: fit-content;
-        margin-bottom: 8px;
-        padding: 8px 16px;
+    & > button {
+      @include submit-bth-padding-center;
 
-        color: $grey-grey-1;
-        background-color: $daybreak-blue-blue-6;
-        @include font-size-regular_16px-24px;
-      }
+      color: $grey-grey-1;
+      background-color: $daybreak-blue-blue-6;
+      @include font-size-regular_16px-24px;
     }
 
     .have_account {

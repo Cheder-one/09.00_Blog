@@ -1,15 +1,18 @@
 import { Row } from 'antd';
-/** @jsxImportSource @emotion/react */
 import Markdown from 'markdown-to-jsx';
 
-import { removeInvisibleChar } from '../../../../../utils';
+import { removeInvisibleChar } from '../../../../utils';
 
 import _ from './Article.module.scss';
 import PostedMeta from './PostedMeta';
 import HeaderMeta from './HeaderMeta';
+import Description from './Description';
+import BtnActions from './BtnActions';
 
 function Article({ article, isFull }) {
   const full = isFull ? '--full' : '';
+
+  // TODO Наладить заголовок используя Paragraph
 
   return (
     <article className={_[`article_card${full}`]}>
@@ -27,15 +30,16 @@ function Article({ article, isFull }) {
           username={article.author.username}
         />
       </Row>
-      <Row className={_.description}>
-        <div className={_[`text${full}`]}>{article.description}</div>
+      <Row className={_[`description${full}`]}>
+        <Description description={article.description} full={full} />
+        <BtnActions author={article.author.username} isFull={isFull} />
       </Row>
 
-      {isFull && article.body ? (
+      {isFull && article.body && (
         <Markdown className={_.body}>
           {removeInvisibleChar(article.body).trim()}
         </Markdown>
-      ) : null}
+      )}
     </article>
   );
 }

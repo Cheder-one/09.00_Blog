@@ -52,6 +52,32 @@ export const confirmPassCheck = (prevPass) => ({
   validate: (pass) => prevPass === pass || 'Passwords must match',
 });
 
+export const titleCheck = {
+  required: 'Title is required',
+  minLength: {
+    value: 1,
+    message: 'Title must be at least 1 characters',
+  },
+  maxLength: {
+    value: 100,
+    message: 'Title must be less than 100 characters',
+  },
+};
+
+export const descriptionCheck = {
+  maxLength: {
+    value: 200,
+    message: 'Title must be less than 200 characters',
+  },
+};
+
+export const textCheck = {
+  maxLength: {
+    value: 5000,
+    message: 'Text must be less than 5000 characters',
+  },
+};
+
 export const tagsCheck = {
   required: 'Tag must be at least 1 characters',
   minLength: {

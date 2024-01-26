@@ -21,17 +21,23 @@ const articlesSlice = createSlice({
   name: ARTICLES,
   initialState,
   reducers: {
-    success: (state, action) => {
+    loaded: (state, action) => {
       state.chunk.entities = action.payload;
       state.chunk.isLoading = false;
     },
-    successOne: (state, action) => {
+    loadedOne: (state, action) => {
       state.one.entities = action.payload;
       state.one.isLoading = false;
+    },
+    deletedOne: (state) => {
+      state.one.entities = {};
+      state.one.isLoading = true;
     },
 
     requested: (state) => {
       state.chunk.isLoading = true;
+    },
+    requestedOne: (state) => {
       state.one.isLoading = true;
     },
     failed: (state) => {
@@ -41,38 +47,62 @@ const articlesSlice = createSlice({
   },
 });
 
-const { success, successOne, requested, failed } = articlesSlice.actions;
+const { loaded, loadedOne, deletedOne, requested, requestedOne, failed } =
+  articlesSlice.actions;
 
 const callHandleError = (error, dispatch) => {
   dispatch(handleError(error, failed, ARTICLES));
 };
 
 export const articleActions = {
-  setArticlesChunk: (params) => async (dispatch) => {
-    dispatch(requested());
-    try {
-      const data = await articleService.loadChunk(params);
-      dispatch(success(data));
-    } catch (error) {
-      callHandleError(error, dispatch);
-    }
-  },
+  setArticlesChunk:
+    // prettier-ignore
+    (params = { limit: 5, offset: 0 }) => async (dispatch) => {
+      dispatch(requested());
+      try {
+        const data = await articleService.loadChunk(params);
+        dispatch(loaded(data));
+      } catch (error) {
+        callHandleError(error, dispatch);
+      }
+    },
 
   setArticleOne: (slug) => async (dispatch) => {
-    dispatch(requested());
+    dispatch(requestedOne());
     try {
       const data = await articleService.loadOne(slug);
-      dispatch(successOne(data));
+      dispatch(loadedOne(data));
     } catch (error) {
       callHandleError(error, dispatch);
     }
   },
 
   createArticle: (article) => async (dispatch) => {
-    dispatch(requested());
+    dispatch(requestedOne());
     try {
       const data = await articleService.create({ article });
-      dispatch(successOne(data));
+      dispatch(loadedOne(data));
+    } catch (error) {
+      callHandleError(error, dispatch);
+    }
+  },
+
+  editArticle: (slug, article) => async (dispatch) => {
+    dispatch(requestedOne());
+    try {
+      const data = await articleService.edit(slug, { article });
+      dispatch(loadedOne(data));
+    } catch (error) {
+      callHandleError(error, dispatch);
+    }
+  },
+
+  deleteArticle: (slug) => async (dispatch) => {
+    const { setArticlesChunk } = articleActions;
+    dispatch(deletedOne());
+    try {
+      await articleService.delete(slug);
+      setArticlesChunk();
     } catch (error) {
       callHandleError(error, dispatch);
     }

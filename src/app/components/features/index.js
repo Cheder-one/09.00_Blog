@@ -1,17 +1,19 @@
-import Article from './article/miniArticle/Article';
+import Article from './article/Article';
 import ArticleList from './articleList/ArticleList';
 import LoginForm from './form/login/LoginForm';
 import ProfileEditForm from './form/profileEdit/ProfileEditForm';
 import RegisterForm from './form/register/RegisterForm';
 import Header from './header/Header';
-import NewArticle from './form/newArticle/NewArticle';
+import ArticleForm from './form/articleForm/ArticleForm';
+import FullArticle from './article/fullArticle/FullArticle';
 
 export {
-  NewArticle,
+  ArticleForm,
   ProfileEditForm,
   Header,
   RegisterForm,
   LoginForm,
   Article,
+  FullArticle,
   ArticleList,
 };

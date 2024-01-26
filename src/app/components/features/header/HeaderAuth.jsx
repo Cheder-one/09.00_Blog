@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 
+import { useScrollToElement } from '../../../../hooks';
 import smileSrc from '../../../assets/smiley-cyrus.jpg';
 import { paginationActions } from '../../../store/reducers/pagination';
 import { authActions, authSelectors } from '../../../store/reducers/auth';
-import { useScrollToElement } from '../../../../hooks';
 
 import _ from './Header.module.scss';
 
@@ -47,6 +47,14 @@ function HeaderAuth({ user, logoutUser }) {
     </div>
   );
 }
+
+HeaderAuth.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
+  logoutUser: PropTypes.func.isRequired,
+};
 
 const mapState = (state) => ({
   user: authSelectors.getUser(state),
