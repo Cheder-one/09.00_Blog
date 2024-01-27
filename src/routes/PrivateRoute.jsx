@@ -7,7 +7,12 @@ import { Loader } from '../app/components/ui';
 import { authSelectors } from '../app/store/reducers/auth';
 import { articleSelectors } from '../app/store/reducers/articles';
 
-function PrivateRoute({ isAuthenticated, component: Component, ...rest }) {
+function PrivateRoute({
+  articleError,
+  isAuthenticated,
+  component: Component,
+  ...rest
+}) {
   if (isAuthenticated === null) {
     return <Loader />;
   }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { Col, Row, Button, Popconfirm } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
+import { toast } from 'react-toastify';
 
 import { articleActions } from '../../../store/reducers/articles';
 import { authSelectors } from '../../../store/reducers/auth';
@@ -17,8 +18,9 @@ function BtnActions({ author, username, isFull, deleteArticle }) {
   };
 
   const handleDelete = () => {
-    deleteArticle(slug) // prettier-ignore
-      .then(() => history.push('/'));
+    deleteArticle(slug)
+      .then(() => history.push('/'))
+      .catch((err) => toast.error(err.info));
   };
 
   return (

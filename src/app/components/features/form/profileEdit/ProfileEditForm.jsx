@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { Flex, Form, Input, Button } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
+import { toast } from 'react-toastify';
 
 import {
   nameCheck,
@@ -37,11 +38,10 @@ function ProfileEditForm({ user, editUser, authError }) {
       image: data.image,
       password: data.password,
     };
-    editUser(userEdit) // prettier-ignore
-      .then(() => history.push('/'));
+    editUser(userEdit)
+      .then(() => history.push('/'))
+      .catch((err) => toast.error(err.info));
   };
-
-  useAlert(authError.profileEdit, 'info');
 
   return (
     <div className={_.page}>

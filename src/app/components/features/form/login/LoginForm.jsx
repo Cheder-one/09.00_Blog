@@ -3,15 +3,12 @@ import { useForm } from 'react-hook-form';
 import { Flex, Form, Input, Button } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
+import { toast } from 'react-toastify';
 
 import FormController from '../helpers/FormController';
 import { emailCheck, passwordCheck } from '../validators';
 import { authActions, authSelectors } from '../../../../store/reducers/auth';
-import {
-  useAlert,
-  useScrollToElement,
-  useSubmitStatus,
-} from '../../../../../hooks';
+import { useScrollToElement, useSubmitStatus } from '../../../../../hooks';
 
 import _ from './LoginForm.module.scss';
 
@@ -37,11 +34,10 @@ function LoginForm({ loginUser, authError }) {
       email: data.email,
       password: data.password,
     };
-    loginUser(user) // prettier-ignore
-      .then(() => history.push('/'));
+    loginUser(user)
+      .then(() => history.push('/'))
+      .catch((err) => toast.error(err.info));
   };
-
-  useAlert(authError.login, 'info');
 
   return (
     <div className={_.page}>

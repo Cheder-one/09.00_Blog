@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import Article from '../Article';
 import {
@@ -21,7 +22,8 @@ function FullArticle({
   const { slug } = useParams();
 
   useEffect(() => {
-    setArticleOne(slug);
+    setArticleOne(slug) // prettier-ignore
+      .catch((err) => toast.error(err.info));
   }, []);
 
   useNotFound(articleError);

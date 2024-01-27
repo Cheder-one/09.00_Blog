@@ -3,6 +3,17 @@ import ServiceError from '../../../utils/ServiceError';
 import api from './api.service';
 
 const userService = {
+  checkAuth: async () => {
+    try {
+      if (!localStorage.getItem('token')) return null;
+      const { data } = await api.get('/user');
+      return data;
+    } catch (error) {
+      console.log(error);
+      const info = 'Ошибка при проверке авторизации';
+      throw new ServiceError(error, info);
+    }
+  },
   register: async (body) => {
     try {
       const { data } = await api.post('/users', body);
@@ -10,7 +21,7 @@ const userService = {
     } catch (error) {
       console.log(error);
       const info =
-        error.request.status === 422
+        error?.request?.status === 422
           ? 'Пользователь с такими данными уже существует'
           : 'Ошибка регистрации пользователя';
       throw new ServiceError(error, info);
@@ -23,17 +34,6 @@ const userService = {
     } catch (error) {
       console.log(error);
       const info = 'Ошибка при входе пользователя';
-      throw new ServiceError(error, info);
-    }
-  },
-  checkAuth: async () => {
-    try {
-      if (!localStorage.getItem('token')) return null;
-      const { data } = await api.get('/user');
-      return data;
-    } catch (error) {
-      console.log(error);
-      const info = 'Ошибка при проверке авторизации';
       throw new ServiceError(error, info);
     }
   },

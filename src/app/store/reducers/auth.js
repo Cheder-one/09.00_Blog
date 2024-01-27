@@ -34,7 +34,6 @@ const authSlice = createSlice({
     },
     failed: (state) => {
       state.isLoaded = false;
-      // state.isAuthenticated = false;
     },
     setError: (state, action) => {
       const { key, error } = JSON.parse(action.payload);

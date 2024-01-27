@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
+import { toast } from 'react-toastify';
 
 import {
   nameCheck,
@@ -12,7 +13,7 @@ import {
 } from '../validators';
 import _ from '../login/LoginForm.module.scss';
 import FormController from '../helpers/FormController';
-import { useAlert, useSubmitStatus } from '../../../../../hooks';
+import { useSubmitStatus } from '../../../../../hooks';
 import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
 function RegisterForm({ registerUser, authError }) {
@@ -38,11 +39,10 @@ function RegisterForm({ registerUser, authError }) {
       email: data.email,
       password: data.password,
     };
-    registerUser(user) // prettier-ignore
-      .then(() => history.push('/login/sign-in'));
+    registerUser(user)
+      .then(() => history.push('/login/sign-in'))
+      .catch((err) => toast.error(err.info));
   };
-
-  useAlert(authError.register, 'info');
 
   const defineClass = (className) => {
     return _[`${className}${errors.checkbox ? '--error' : ''}`];

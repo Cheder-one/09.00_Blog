@@ -49,7 +49,7 @@ const articlesSlice = createSlice({
       // state.one.isLoading = false;
     },
     setError: (state, action) => {
-      const { key, error } = action.payload;
+      const { key, error } = JSON.parse(action.payload);
       state.errors[key] = error;
     },
   },
@@ -143,7 +143,7 @@ export const articleActions = {
 export const articleSelectors = {
   getChunk: (state) => state[ARTICLES].chunk.entities,
   getOne: (state) => state[ARTICLES].one.entities.article,
-  getError: (state) => state[ARTICLES].error,
+  getError: (state) => state[ARTICLES].errors,
   isLoading: (state) => state[ARTICLES].chunk.isLoading,
   isLoadingOne: (state) => state[ARTICLES].one.isLoading,
 };

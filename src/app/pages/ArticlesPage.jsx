@@ -2,6 +2,7 @@ import { Col } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators as bindActions } from 'redux';
+import { toast } from 'react-toastify';
 
 import { Pagination } from '../components/ui';
 import { getPaginateParams } from '../../utils';
@@ -22,7 +23,8 @@ function ArticlesPage({
 
   useEffect(() => {
     const params = getPaginateParams({ pagination });
-    setArticlesChunk(params);
+    setArticlesChunk(params) // prettier-ignore
+      .catch((err) => toast.error(err.info));
   }, [pagination]);
 
   return (

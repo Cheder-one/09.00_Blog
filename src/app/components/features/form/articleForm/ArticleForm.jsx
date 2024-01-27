@@ -5,6 +5,7 @@ import { Input, Button, Form, Col } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { bindActionCreators as bindActions } from 'redux';
+import { toast } from 'react-toastify';
 
 import {
   articleActions,
@@ -32,7 +33,7 @@ function ArticleForm({
   isLoadingOne,
 }) {
   const { edit, create } = articleError || {};
-  console.log(articleError);
+  // console.log(edit, create);
   const [isSubmitted, setIsSubmitted] = useSubmitStatus(edit || create);
   const { control, register, setValue, handleSubmit, formState } = useForm();
   const { fields, append, remove } = useFieldArray({ control, name: 'tags' });
@@ -61,16 +62,18 @@ function ArticleForm({
       tagList: data.tags.map((item) => item.tag),
     };
 
-    if (isEdit) {
-      editArticle(slug, article).then(() =>
-        history.replace(`/articles/${slug}`)
-      );
-    } else {
-      createArticle(article).then(() => history.push('/'));
+    try {
+      if (isEdit) {
+        await editArticle(slug, article);
+        history.replace(`/articles/${slug}`);
+      } else {
+        await createArticle(article);
+        history.push('/');
+      }
+    } catch (error) {
+      toast.error(error.info);
     }
   };
-
-  useAlert(articleError?.create, 'info');
 
   return (
     <div className={_.page}>
@@ -142,7 +145,7 @@ function ArticleForm({
           </Form>
         </div>
       </div>
-      {isLoadingOne && isEdit && <Loader />}
+      {/* {isLoadingOne && isEdit && <Loader />} */}
     </div>
   );
 }
