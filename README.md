@@ -1,1 +1,1 @@
-https://08-00-aviasales-app.vercel.app/
+https://09-00-blog.vercel.app/
