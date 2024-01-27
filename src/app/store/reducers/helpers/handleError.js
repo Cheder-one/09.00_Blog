@@ -14,6 +14,7 @@ const handleError = (errObj, failed, setError) => (dispatch) => {
   error.message = error.pureMessage;
   delete error.name;
   delete error.pureMessage;
+  delete error.stack;
 
   dispatch(failed());
   dispatch(setError(JSON.stringify({ key, error })));
