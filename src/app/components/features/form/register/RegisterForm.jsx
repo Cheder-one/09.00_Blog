@@ -37,7 +37,7 @@ function RegisterForm({ registerUser, authError }) {
   };
 
   const defineClass = (className) => {
-    return _[`${className}${errors.checkbox ? '--error' : ''}`];
+    return _[`${className}${errors.agreement ? '--error' : ''}`];
   };
 
   return (
