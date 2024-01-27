@@ -51,7 +51,6 @@
     "@reduxjs/toolkit": "^2.0.1",
     "antd": "^5.12.5",
     "axios": "^1.6.4",
-    "core-js": "^3.35.1",
     "date-fns": "^3.2.0",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
