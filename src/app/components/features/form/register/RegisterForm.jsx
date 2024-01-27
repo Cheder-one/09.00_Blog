@@ -32,7 +32,7 @@ function RegisterForm({ registerUser, authError }) {
       password: data.password,
     };
     registerUser(user)
-      .then(() => history.push('/login/sign-in'))
+      .then(() => history.push('/'))
       .catch((err) => toast.error(err.info));
   };
 

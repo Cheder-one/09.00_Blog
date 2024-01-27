@@ -21,6 +21,9 @@ import ArticleRoutes from './routes/ArticleRoutes';
 
 // TODO Добавить PropTypes
 
+// FIXME Отображение Popup с ошибками
+// FIXME Запретить отображение console.log в режиме production
+
 function App({ checkAuth }) {
   useEffect(() => {
     checkAuth();

@@ -9,6 +9,10 @@ import createStore from './app/store/root/store.js';
 
 const store = createStore();
 
+if (process.env.NODE_ENV === 'production') {
+  console.log = function () {};
+}
+
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <Router>
