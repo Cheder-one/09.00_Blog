@@ -59,7 +59,8 @@ const articleService = {
       return data;
     } catch (error) {
       console.log(error);
-      const info = `Ошибка лайка article с ID ${slug}`;
+      const info = `Необходимо авторизоваться для оценки`;
+      // const info = `Ошибка лайка article с ID ${slug}`;
       throw new ServiceError(error, info);
     }
   },

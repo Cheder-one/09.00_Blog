@@ -18,10 +18,9 @@ import ArticleRoutes from './routes/ArticleRoutes';
 
 // TODO Перейти на Router-v6
 // TODO Внедрить TypeScript
-
 // TODO Добавить PropTypes
 
-// FIXME Отображение Popup с ошибками
+// FIXME HeaderSkeleton
 // FIXME Запретить отображение console.log в режиме production
 
 function App({ checkAuth }) {

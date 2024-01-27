@@ -4,6 +4,20 @@ import authService from '../services/auth.service';
 
 import { handleError } from './helpers';
 
+const setAuthUser = (state, action) => {
+  state.user = action.payload.user;
+  state.isAuthenticated = true;
+  state.isLoaded = true;
+  state.errors = {};
+};
+
+const setLogoutUser = (state) => {
+  state.user = null;
+  state.isAuthenticated = false;
+  state.isLoaded = false;
+  state.errors = {};
+};
+
 const initialState = {
   user: null,
   errors: {},
@@ -18,15 +32,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     success: (state, action) => {
-      state.user = action.payload.user;
-      state.isAuthenticated = true;
-      state.isLoaded = true;
-      state.errors = {};
+      setAuthUser(state, action);
+    },
+    login: (state, action) => {
+      setAuthUser(state, action);
+    },
+    register: (state) => {
+      setLogoutUser(state);
+    },
+    edited: (state, action) => {
+      setAuthUser(state, action);
     },
     logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
-      state.errors = {};
+      setLogoutUser(state);
     },
 
     requested: (state) => {
@@ -42,7 +60,16 @@ const authSlice = createSlice({
   },
 });
 
-const { success, logout, requested, failed, setError } = authSlice.actions;
+const {
+  success,
+  login,
+  register,
+  edited,
+  logout,
+  requested,
+  failed,
+  setError,
+} = authSlice.actions;
 
 const callHandleError = (errObj, dispatch) => {
   dispatch(handleError(errObj, failed, setError));
@@ -64,8 +91,8 @@ export const authActions = {
   registerUser: (user) => async (dispatch) => {
     dispatch(requested());
     try {
-      const data = await authService.register({ user });
-      dispatch(success(data));
+      await authService.register({ user });
+      dispatch(register(null));
     } catch (error) {
       callHandleError({ register: error }, dispatch);
       throw error;
@@ -77,7 +104,7 @@ export const authActions = {
     try {
       const data = await authService.login({ user });
       localStorage.setItem('token', data.user.token);
-      dispatch(success(data));
+      dispatch(login(data));
     } catch (error) {
       callHandleError({ login: error }, dispatch);
       throw error;
@@ -88,7 +115,7 @@ export const authActions = {
     dispatch(requested());
     try {
       const data = await authService.update({ user });
-      dispatch(success(data));
+      dispatch(edited(data));
     } catch (error) {
       callHandleError({ profileEdit: error }, dispatch);
       throw error;
