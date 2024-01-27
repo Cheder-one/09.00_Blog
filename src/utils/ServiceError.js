@@ -6,8 +6,8 @@ class ServiceError extends Error {
     this.info = info;
     this.pureMessage = error.message;
     this.message = `${error.message} | ${info}`;
-    // Error.captureStackTrace(this, this.constructor);
-    this.stack = error.stack;
+    Error.captureStackTrace(this, this.constructor);
+    // this.stack = error.stack;
   }
 }
 
