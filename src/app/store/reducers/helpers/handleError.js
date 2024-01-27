@@ -8,16 +8,14 @@ import { entries } from 'lodash';
 // };
 
 const handleError = (errObj, failed, setError) => (dispatch) => {
-  const [key, error] = entries(errObj).flat();
-  console.error(error);
-
-  error.message = error.pureMessage;
-  delete error.name;
-  delete error.pureMessage;
-  delete error.stack;
-
-  dispatch(failed());
-  dispatch(setError(JSON.stringify({ key, error })));
+  // const [key, error] = entries(errObj).flat();
+  // console.error(error);
+  // error.message = error.pureMessage;
+  // delete error.name;
+  // delete error.pureMessage;
+  // delete error.stack;
+  // dispatch(failed());
+  // dispatch(setError(JSON.stringify({ key, error })));
 };
 
 export default handleError;
