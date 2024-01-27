@@ -7,8 +7,16 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: `Token ${localStorage.getItem('token')}`,
   },
+});
+
+// Функция для установки заголовка Authorization перед каждым запросом
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Token ${token}`;
+  }
+  return config;
 });
 
 const apiService = {

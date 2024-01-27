@@ -2,12 +2,11 @@ import { Col } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators as bindActions } from 'redux';
-import { Redirect } from 'react-router-dom';
 
 import { Pagination } from '../components/ui';
 import { getPaginateParams } from '../../utils';
 import { ArticleList } from '../components/features';
-import { errorsActions, errorsSelectors } from '../store/reducers/errors';
+import { errorsActions } from '../store/reducers/errors';
 import { paginationSelectors } from '../store/reducers/pagination';
 import { articleActions, articleSelectors } from '../store/reducers/articles';
 import { useScrollTop } from '../../hooks';
@@ -15,8 +14,6 @@ import { useScrollTop } from '../../hooks';
 function ArticlesPage({
   articlesChunk,
   pagination,
-  errors,
-  clearErrors,
   isLoading,
   setArticlesChunk,
 }) {
@@ -43,7 +40,7 @@ function ArticlesPage({
 const mapState = (state) => ({
   articlesChunk: articleSelectors.getChunk(state),
   pagination: paginationSelectors.getPagination(state),
-  errors: errorsSelectors.getError(state),
+  articleError: articleSelectors.getError(state),
   isLoading: articleSelectors.isLoading(state),
 });
 

@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import { authSelectors } from '../app/store/reducers/auth';
 import { Loader } from '../app/components/ui';
+import { authSelectors } from '../app/store/reducers/auth';
+import { articleSelectors } from '../app/store/reducers/articles';
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const isAuthenticated = useSelector(authSelectors.isAuthenticated);
-
+function PrivateRoute({ isAuthenticated, component: Component, ...rest }) {
   if (isAuthenticated === null) {
     return <Loader />;
   }
@@ -26,4 +26,19 @@ function PrivateRoute({ component: Component, ...rest }) {
   );
 }
 
-export default PrivateRoute;
+PrivateRoute.propTypes = {
+  isAuthenticated: PropTypes.oneOf([null, false, true]),
+  component: PropTypes.shape({}).isRequired,
+};
+
+PrivateRoute.defaultProps = {
+  isAuthenticated: null,
+};
+
+const mapState = (state) => ({
+  authError: authSelectors.getError(state),
+  articleError: articleSelectors.getError(state),
+  isAuthenticated: authSelectors.isAuthenticated(state),
+});
+
+export default connect(mapState)(PrivateRoute);

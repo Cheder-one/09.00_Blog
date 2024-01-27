@@ -8,6 +8,7 @@ const userService = {
       const { data } = await api.post('/users', body);
       return data;
     } catch (error) {
+      console.log(error);
       const info =
         error.request.status === 422
           ? 'Пользователь с такими данными уже существует'
@@ -20,6 +21,7 @@ const userService = {
       const { data } = await api.post('/users/login ', body);
       return data;
     } catch (error) {
+      console.log(error);
       const info = 'Ошибка при входе пользователя';
       throw new ServiceError(error, info);
     }
@@ -30,6 +32,7 @@ const userService = {
       const { data } = await api.get('/user');
       return data;
     } catch (error) {
+      console.log(error);
       const info = 'Ошибка при проверке авторизации';
       throw new ServiceError(error, info);
     }
@@ -39,6 +42,7 @@ const userService = {
       const { data } = await api.put('/user', body);
       return data;
     } catch (error) {
+      console.log(error);
       const info = 'Ошибка при обновлении профиля';
       throw new ServiceError(error, info);
     }

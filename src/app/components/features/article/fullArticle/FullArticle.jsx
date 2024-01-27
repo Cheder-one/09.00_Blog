@@ -8,28 +8,30 @@ import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
-import {
-  errorsActions,
-  errorsSelectors,
-} from '../../../../store/reducers/errors';
 import { ArticleSkeleton } from '../../../ui';
 import { useNotFound } from '../../../../../hooks';
+import { errorsActions } from '../../../../store/reducers/errors';
 
-function FullArticle({ articleOne, isLoadingOne, setArticleOne, errors }) {
+function FullArticle({
+  articleOne,
+  isLoadingOne,
+  setArticleOne,
+  articleError,
+}) {
   const { slug } = useParams();
 
   useEffect(() => {
     setArticleOne(slug);
   }, []);
 
-  useNotFound(errors.articles);
+  useNotFound(articleError);
 
   return !isLoadingOne ? (
     <div>
       <Article
         key={articleOne?.slug}
         article={articleOne}
-        errors={errors}
+        errors={articleError}
         isFull
       />
     </div>
@@ -40,7 +42,7 @@ function FullArticle({ articleOne, isLoadingOne, setArticleOne, errors }) {
 
 const mapState = (state) => ({
   articleOne: articleSelectors.getOne(state),
-  errors: errorsSelectors.getError(state),
+  articleError: articleSelectors.getError(state),
   isLoadingOne: articleSelectors.isLoadingOne(state),
 });
 

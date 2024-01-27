@@ -4,36 +4,50 @@ import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
 
-import _ from '../login/LoginForm.module.scss';
-import FormController from '../helpers/FormController';
 import {
   nameCheck,
   emailCheck,
   passwordCheck,
   confirmPassCheck,
 } from '../validators';
-import { authActions } from '../../../../store/reducers/auth';
+import _ from '../login/LoginForm.module.scss';
+import FormController from '../helpers/FormController';
+import { useAlert, useSubmitStatus } from '../../../../../hooks';
+import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
-function RegisterForm({ registerUser }) {
-  const { watch, control, handleSubmit, formState } = useForm();
-  const { errors, isSubmitSuccessful } = formState;
+function RegisterForm({ registerUser, authError }) {
+  const [isSubmitted, setIsSubmitted] = useSubmitStatus(authError.register);
+  const { watch, control, handleSubmit, formState } = useForm({
+    defaultValues: {
+      name: 'useracc',
+      email: 'useracc@gmail.com',
+      password: 'useracc@gmail.com',
+      passRepeat: 'useracc@gmail.com',
+      agreement: true,
+    },
+  });
+  const { errors } = formState;
   const history = useHistory();
 
   const onSubmit = async (data) => {
-    if (isSubmitSuccessful) return;
+    if (isSubmitted) return;
+    setIsSubmitted(true);
+
     const user = {
       username: data.name,
       email: data.email,
       password: data.password,
     };
-    registerUser(user)
-      .then(() => history.push('/sign-in'))
-      .catch((error) => alert(error.info));
+    registerUser(user) // prettier-ignore
+      .then(() => history.push('/login/sign-in'));
   };
+
+  useAlert(authError.register, 'info');
 
   const defineClass = (className) => {
     return _[`${className}${errors.checkbox ? '--error' : ''}`];
   };
+
   return (
     <div className={_.page}>
       <div className={_.wrapper} id="login-form">
@@ -109,12 +123,17 @@ function RegisterForm({ registerUser }) {
             </div>
 
             <div className={_.submit_box}>
-              <Button htmlType="submit" type="primary" block>
+              <Button
+                htmlType="submit"
+                type="primary"
+                block
+                loading={isSubmitted}
+              >
                 Create
               </Button>
               <div className={_.have_account}>
                 Already have an account?
-                <Link className={_.toggle_login} to="/sign-in/">
+                <Link className={_.toggle_login} to="/login/sign-in/">
                   Sign In
                 </Link>
               </div>
@@ -127,7 +146,7 @@ function RegisterForm({ registerUser }) {
 }
 
 const mapState = (state) => ({
-  // name: reducerSelectors.getStoreState(state)
+  authError: authSelectors.getError(state),
 });
 
 const mapDispatch = (dispatch) => {

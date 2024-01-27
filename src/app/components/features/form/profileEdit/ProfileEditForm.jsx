@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { Flex, Form, Input, Button } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
-import { useEffect } from 'react';
 
 import {
   nameCheck,
@@ -14,32 +13,35 @@ import {
 } from '../validators';
 import _ from '../login/LoginForm.module.scss';
 import FormController from '../helpers/FormController';
+import { useAlert, useSubmitStatus } from '../../../../../hooks';
 import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
-function ProfileEditForm({ user, updateUser }) {
-  const { control, handleSubmit, setValue, formState } = useForm();
-  const { errors, isSubmitSuccessful } = formState;
+import { usePresetProfileEditForm } from './helpers';
+
+function ProfileEditForm({ user, editUser, authError }) {
+  const [isSubmitted, setIsSubmitted] = useSubmitStatus(authError.profileEdit);
+  const { control, setValue, handleSubmit, formState } = useForm();
+  const { errors } = formState;
   const history = useHistory();
 
-  useEffect(() => {
-    setValue('name', user.username);
-    setValue('email', user.email);
-    setValue('image', user.image);
-  }, [user]);
+  usePresetProfileEditForm(user, setValue);
 
   const onSubmit = async (data) => {
-    if (isSubmitSuccessful) return;
+    if (isSubmitted) return;
+    setIsSubmitted(true);
+
     const userEdit = {
       username: data.name,
       email: data.email,
-      bio: 'Lorem ipsum dolor.',
+      bio: 'Lorem bio',
       image: data.image,
       password: data.password,
     };
-    updateUser(userEdit)
-      .then(() => history.push('/'))
-      .catch((error) => alert(error.info));
+    editUser(userEdit) // prettier-ignore
+      .then(() => history.push('/'));
   };
+
+  useAlert(authError.profileEdit, 'info');
 
   return (
     <div className={_.page}>
@@ -95,7 +97,12 @@ function ProfileEditForm({ user, updateUser }) {
               </FormController>
             </div>
             <div className={_.submit_box}>
-              <Button htmlType="submit" type="primary" block>
+              <Button
+                htmlType="submit"
+                type="primary"
+                block
+                loading={isSubmitted}
+              >
                 Save
               </Button>
             </div>
@@ -108,6 +115,7 @@ function ProfileEditForm({ user, updateUser }) {
 
 const mapState = (state) => ({
   user: authSelectors.getUser(state),
+  authError: authSelectors.getError(state),
 });
 
 const mapDispatch = (dispatch) => {

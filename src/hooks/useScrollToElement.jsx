@@ -1,11 +1,12 @@
 /* eslint-disable default-param-last */
 import { useEffect, useState } from 'react';
 
-function useScrollToElement(id, block, behavior) {
+function useScrollToElement(id, block, behavior, validation = true) {
+  const mediaQuery = window.matchMedia('(max-height: 650px)').matches;
   const [clicked, setClicked] = useState();
 
   useEffect(() => {
-    if (window.matchMedia('(max-width: 1024px)').matches) {
+    if (mediaQuery || !validation) {
       const element = document.getElementById(id);
       if (!element) return;
 

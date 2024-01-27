@@ -17,13 +17,14 @@ function BtnActions({ author, username, isFull, deleteArticle }) {
   };
 
   const handleDelete = () => {
-    deleteArticle(slug);
-    history.push('/');
+    deleteArticle(slug) // prettier-ignore
+      .then(() => history.push('/'));
   };
 
   return (
-    <Col className={_.article_actions_col}>
-      {isFull && author === username && (
+    isFull &&
+    author === username && (
+      <Col className={_.article_actions_col}>
         <Row className={_.actions_row}>
           <Popconfirm
             description="Are you sure to delete this article?"
@@ -40,8 +41,8 @@ function BtnActions({ author, username, isFull, deleteArticle }) {
             Edit
           </Button>
         </Row>
-      )}
-    </Col>
+      </Col>
+    )
   );
 }
 

@@ -3,7 +3,7 @@ import { times } from 'lodash';
 import { ArticleSkeleton } from '../../ui';
 import Article from '../article/Article';
 
-function ArticleList({ articles, isLoading, pageSize, errors }) {
+function ArticleList({ articles, isLoading, pageSize }) {
   return (
     <div>
       {!isLoading

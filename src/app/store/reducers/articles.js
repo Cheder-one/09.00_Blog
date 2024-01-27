@@ -13,6 +13,7 @@ const initialState = {
     entities: {},
     isLoading: true,
   },
+  errors: {},
 };
 
 const ARTICLES = 'articles';
@@ -24,14 +25,17 @@ const articlesSlice = createSlice({
     loaded: (state, action) => {
       state.chunk.entities = action.payload;
       state.chunk.isLoading = false;
+      state.errors = {};
     },
     loadedOne: (state, action) => {
       state.one.entities = action.payload;
       state.one.isLoading = false;
+      state.errors = {};
     },
     deletedOne: (state) => {
       state.one.entities = {};
       state.one.isLoading = true;
+      state.errors = {};
     },
 
     requested: (state) => {
@@ -44,14 +48,25 @@ const articlesSlice = createSlice({
       // state.chunk.isLoading = false;
       // state.one.isLoading = false;
     },
+    setError: (state, action) => {
+      const { key, error } = action.payload;
+      state.errors[key] = error;
+    },
   },
 });
 
-const { loaded, loadedOne, deletedOne, requested, requestedOne, failed } =
-  articlesSlice.actions;
+const {
+  loaded,
+  loadedOne,
+  deletedOne,
+  requested,
+  requestedOne,
+  failed,
+  setError,
+} = articlesSlice.actions;
 
-const callHandleError = (error, dispatch) => {
-  dispatch(handleError(error, failed, ARTICLES));
+const callHandleError = (errObj, dispatch) => {
+  dispatch(handleError(errObj, failed, setError));
 };
 
 export const articleActions = {
@@ -63,7 +78,8 @@ export const articleActions = {
         const data = await articleService.loadChunk(params);
         dispatch(loaded(data));
       } catch (error) {
-        callHandleError(error, dispatch);
+        callHandleError({ chunk: error }, dispatch);
+        throw error;
       }
     },
 
@@ -73,7 +89,8 @@ export const articleActions = {
       const data = await articleService.loadOne(slug);
       dispatch(loadedOne(data));
     } catch (error) {
-      callHandleError(error, dispatch);
+      callHandleError({ one: error }, dispatch);
+      throw error;
     }
   },
 
@@ -83,7 +100,8 @@ export const articleActions = {
       const data = await articleService.create({ article });
       dispatch(loadedOne(data));
     } catch (error) {
-      callHandleError(error, dispatch);
+      callHandleError({ create: error }, dispatch);
+      throw error;
     }
   },
 
@@ -93,7 +111,8 @@ export const articleActions = {
       const data = await articleService.edit(slug, { article });
       dispatch(loadedOne(data));
     } catch (error) {
-      callHandleError(error, dispatch);
+      callHandleError({ edit: error }, dispatch);
+      throw error;
     }
   },
 
@@ -104,7 +123,19 @@ export const articleActions = {
       await articleService.delete(slug);
       setArticlesChunk();
     } catch (error) {
-      callHandleError(error, dispatch);
+      callHandleError({ delete: error }, dispatch);
+      throw error;
+    }
+  },
+
+  addFavorite: (slug) => async (dispatch) => {
+    dispatch(requestedOne());
+    try {
+      const data = await articleService.addFavorite(slug);
+      dispatch(loadedOne(data));
+    } catch (error) {
+      callHandleError({ like: error }, dispatch);
+      throw error;
     }
   },
 };
@@ -112,6 +143,7 @@ export const articleActions = {
 export const articleSelectors = {
   getChunk: (state) => state[ARTICLES].chunk.entities,
   getOne: (state) => state[ARTICLES].one.entities.article,
+  getError: (state) => state[ARTICLES].error,
   isLoading: (state) => state[ARTICLES].chunk.isLoading,
   isLoadingOne: (state) => state[ARTICLES].one.isLoading,
 };

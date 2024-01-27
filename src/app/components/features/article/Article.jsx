@@ -12,8 +12,6 @@ import BtnActions from './BtnActions';
 function Article({ article, isFull }) {
   const full = isFull ? '--full' : '';
 
-  // TODO Наладить заголовок используя Paragraph
-
   return (
     <article className={_[`article_card${full}`]}>
       <Row className={_.header}>

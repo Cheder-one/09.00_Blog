@@ -1,6 +1,7 @@
 import { Flex } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 
@@ -19,9 +20,6 @@ import ArticleRoutes from './routes/ArticleRoutes';
 // NOTE Удалить данные входа
 
 // TODO Исправить баг HeaderSkeleton
-// TODO 401 | Ошибка обновления article
-
-// TODO Реализовать отображение пользовательских сообщений об ошибках
 // TODO Реализовать Like
 
 function App({ checkAuth }) {
@@ -42,13 +40,14 @@ function App({ checkAuth }) {
           <Route path="/404" component={NotFound} />
           <Redirect to="/404" />;
         </Switch>
+        <ToastContainer position="bottom-right" autoClose={3000} />
       </Flex>
     </>
   );
 }
 
 const mapState = (state) => ({
-  // isArticlesLoading: articleSelectors.isLoading(state),
+  //
 });
 
 const mapDispatch = (dispatch) => {

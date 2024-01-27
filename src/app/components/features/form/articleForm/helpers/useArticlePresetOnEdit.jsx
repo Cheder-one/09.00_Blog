@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useArticleDataOnEdit = (isEdit, articleOne, setValue) => {
+const useArticlePresetOnEdit = (isEdit, articleOne, setValue) => {
   useEffect(() => {
     if (!isEdit) return;
     const { title, description, body, tagList } = articleOne || {};
@@ -14,4 +14,4 @@ const useArticleDataOnEdit = (isEdit, articleOne, setValue) => {
   }, [articleOne]);
 };
 
-export default useArticleDataOnEdit;
+export default useArticlePresetOnEdit;

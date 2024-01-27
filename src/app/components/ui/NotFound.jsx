@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 `;
 
 function NotFound() {
-  useScrollToElement('not-found', '', 'instant');
+  useScrollToElement('not-found', '', 'instant', false);
 
   return (
     <Wrapper id="not-found">

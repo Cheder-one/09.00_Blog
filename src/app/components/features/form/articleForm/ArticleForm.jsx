@@ -1,48 +1,59 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { Input, Button, Form, Col } from 'antd';
+import { useHistory, useParams } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { bindActionCreators as bindActions } from 'redux';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
-import FormController from '../helpers/FormController';
-import { useScrollToElement } from '../../../../../hooks';
-import { descriptionCheck, textCheck, titleCheck } from '../validators';
+import {
+  useAlert,
+  useScrollToElement,
+  useSubmitStatus,
+} from '../../../../../hooks';
 import { Loader } from '../../../ui';
+import FormController from '../helpers/FormController';
+import { descriptionCheck, textCheck, titleCheck } from '../validators';
 
-import _ from './ArticleForm.module.scss';
 import TagsList from './TagsList';
-import { useArticleDataOnEdit } from './helpers';
+import _ from './ArticleForm.module.scss';
+import { useArticlePresetOnEdit } from './helpers';
 
 function ArticleForm({
   articleOne,
   setArticleOne,
   createArticle,
   editArticle,
+  articleError,
   isLoadingOne,
 }) {
-  const { control, register, handleSubmit, setValue, formState } = useForm();
+  const { edit, create } = articleError || {};
+  console.log(articleError);
+  const [isSubmitted, setIsSubmitted] = useSubmitStatus(edit || create);
+  const { control, register, setValue, handleSubmit, formState } = useForm();
   const { fields, append, remove } = useFieldArray({ control, name: 'tags' });
-  const { errors, isSubmitSuccessful } = formState;
+  const { errors } = formState;
   const { slug } = useParams();
   const history = useHistory();
   const isEdit = !!slug;
 
   useEffect(() => {
-    if (isEdit) setArticleOne(slug);
+    if (isEdit) {
+      setArticleOne(slug);
+    }
   }, []);
 
   useScrollToElement('article-form');
-  useArticleDataOnEdit(isEdit, articleOne, setValue);
+  useArticlePresetOnEdit(isEdit, articleOne, setValue);
 
   const onSubmit = async (data) => {
-    if (isSubmitSuccessful) return;
+    if (isSubmitted) return;
+    setIsSubmitted(true);
+
     const article = {
       body: data.text,
       title: data.title,
@@ -51,15 +62,15 @@ function ArticleForm({
     };
 
     if (isEdit) {
-      editArticle(slug, article)
-        .then(() => history.replace(`/articles/${slug}`))
-        .catch((error) => alert(error.info));
+      editArticle(slug, article).then(() =>
+        history.replace(`/articles/${slug}`)
+      );
     } else {
-      createArticle(article)
-        .then(() => history.push('/'))
-        .catch((error) => alert(error.info));
+      createArticle(article).then(() => history.push('/'));
     }
   };
+
+  useAlert(articleError?.create, 'info');
 
   return (
     <div className={_.page}>
@@ -119,7 +130,12 @@ function ArticleForm({
             </div>
 
             <Col span={11}>
-              <Button className={_.submit_btn} htmlType="submit" type="primary">
+              <Button
+                className={_.submit_btn}
+                htmlType="submit"
+                type="primary"
+                loading={isSubmitted}
+              >
                 Send
               </Button>
             </Col>
@@ -133,6 +149,7 @@ function ArticleForm({
 
 const mapState = (state) => ({
   articleOne: articleSelectors.getOne(state),
+  articleError: articleSelectors.getError(state),
   isLoadingOne: articleSelectors.isLoadingOne(state),
 });
 

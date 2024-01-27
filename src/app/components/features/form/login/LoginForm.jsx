@@ -1,38 +1,47 @@
-import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Flex, Form, Input, Button } from 'antd';
-import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 
 import FormController from '../helpers/FormController';
-import { useScrollToElement } from '../../../../../hooks';
 import { emailCheck, passwordCheck } from '../validators';
-import { authActions } from '../../../../store/reducers/auth';
+import { authActions, authSelectors } from '../../../../store/reducers/auth';
+import {
+  useAlert,
+  useScrollToElement,
+  useSubmitStatus,
+} from '../../../../../hooks';
 
 import _ from './LoginForm.module.scss';
 
-function LoginForm({ loginUser }) {
+function LoginForm({ loginUser, authError }) {
+  const [isSubmitted, setIsSubmitted] = useSubmitStatus(authError.login);
+
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
-      email: 'username@gmail.com',
-      password: 'username@gmail.com',
+      email: 'useracc@gmail.com',
+      password: 'useracc@gmail.com',
     },
   });
-  const { errors, isSubmitSuccessful } = formState;
   const history = useHistory();
+  const { errors } = formState;
 
   useScrollToElement('login-form');
 
   const onSubmit = async (data) => {
-    if (isSubmitSuccessful) return;
+    if (isSubmitted) return;
+    setIsSubmitted(true);
+
     const user = {
       email: data.email,
       password: data.password,
     };
-    loginUser(user)
-      .then(() => history.push('/'))
-      .catch((error) => alert(error));
+    loginUser(user) // prettier-ignore
+      .then(() => history.push('/'));
   };
+
+  useAlert(authError.login, 'info');
 
   return (
     <div className={_.page}>
@@ -70,12 +79,17 @@ function LoginForm({ loginUser }) {
             </div>
 
             <div className={_.submit_box}>
-              <Button htmlType="submit" type="primary" block>
+              <Button
+                htmlType="submit"
+                type="primary"
+                block
+                loading={isSubmitted}
+              >
                 Login
               </Button>
               <div className={_.have_account}>
                 Don’t have an account?
-                <Link className={_.toggle_login} to="/sign-up">
+                <Link className={_.toggle_login} to="/login/sign-up">
                   Sign Up
                 </Link>
               </div>
@@ -88,7 +102,7 @@ function LoginForm({ loginUser }) {
 }
 
 const mapState = (state) => ({
-  // name: reducerSelectors.getStoreState(state)
+  authError: authSelectors.getError(state),
 });
 
 const mapDispatch = (dispatch) => {

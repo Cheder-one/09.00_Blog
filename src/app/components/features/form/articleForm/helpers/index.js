@@ -1,1 +1,1 @@
-export { default as useArticleDataOnEdit } from './useArticleDataOnEdit';
+export { default as useArticlePresetOnEdit } from './useArticlePresetOnEdit';

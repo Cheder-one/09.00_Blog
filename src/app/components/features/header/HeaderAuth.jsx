@@ -51,7 +51,7 @@ function HeaderAuth({ user, logoutUser }) {
 HeaderAuth.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
   }).isRequired,
   logoutUser: PropTypes.func.isRequired,
 };
