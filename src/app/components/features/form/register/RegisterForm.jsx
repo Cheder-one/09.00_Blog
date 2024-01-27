@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 import { Flex, Form, Input, Divider, Checkbox, Button } from 'antd';
-import { toast } from 'react-toastify';
 
 import {
   nameCheck,
@@ -18,15 +18,7 @@ import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
 function RegisterForm({ registerUser, authError }) {
   const [isSubmitted, setIsSubmitted] = useSubmitStatus(authError.register);
-  const { watch, control, handleSubmit, formState } = useForm({
-    defaultValues: {
-      name: 'useracc',
-      email: 'useracc@gmail.com',
-      password: 'useracc@gmail.com',
-      passRepeat: 'useracc@gmail.com',
-      agreement: true,
-    },
-  });
+  const { watch, control, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const history = useHistory();
 

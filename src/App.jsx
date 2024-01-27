@@ -17,9 +17,8 @@ import {
 import ArticleRoutes from './routes/ArticleRoutes';
 
 // TODO Перейти на Router-v6
-// NOTE Удалить данные входа
+// TODO Внедрить TypeScript
 
-// TODO Реализовать Like
 // TODO Добавить PropTypes
 
 function App({ checkAuth }) {

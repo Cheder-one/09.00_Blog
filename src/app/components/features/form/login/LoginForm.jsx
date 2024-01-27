@@ -14,15 +14,9 @@ import _ from './LoginForm.module.scss';
 
 function LoginForm({ loginUser, authError }) {
   const [isSubmitted, setIsSubmitted] = useSubmitStatus(authError.login);
-
-  const { control, handleSubmit, formState } = useForm({
-    defaultValues: {
-      email: 'useracc@gmail.com',
-      password: 'useracc@gmail.com',
-    },
-  });
-  const history = useHistory();
+  const { control, handleSubmit, formState } = useForm();
   const { errors } = formState;
+  const history = useHistory();
 
   useScrollToElement('login-form');
 
