@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Col, Row, Button, Popconfirm } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
-import { toast } from 'react-toastify';
 
 import { articleActions } from '../../../store/reducers/articles';
 import { authSelectors } from '../../../store/reducers/auth';

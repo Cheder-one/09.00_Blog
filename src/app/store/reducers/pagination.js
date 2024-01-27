@@ -21,6 +21,9 @@ const paginationSlice = createSlice({
 const { updated } = paginationSlice.actions;
 
 export const paginationActions = {
+  setInitPagination: () => async (dispatch) => {
+    await dispatch(updated({ page: 1, size: 5 }));
+  },
   updatePagination: (page, size) => async (dispatch) => {
     await dispatch(updated({ page, size }));
   },

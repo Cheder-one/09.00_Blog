@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { articleService } from '../services/index';
+import { getPaginateParams } from '../../../utils';
 
 import { handleError } from './helpers';
+import { paginationActions } from './pagination';
+
+const { setInitPagination } = paginationActions;
+// const { setArticlesChunk } = articleActions;
 
 const initialState = {
   chunk: {
@@ -70,18 +75,18 @@ const callHandleError = (errObj, dispatch) => {
 };
 
 export const articleActions = {
-  setArticlesChunk:
-    // prettier-ignore
-    (params = { limit: 5, offset: 0 }) => async (dispatch) => {
-      dispatch(requested());
-      try {
-        const data = await articleService.loadChunk(params);
-        dispatch(loaded(data));
-      } catch (error) {
-        callHandleError({ chunk: error }, dispatch);
-        throw error;
-      }
-    },
+  setArticlesChunk: () => async (dispatch, getStore) => {
+    const { pagination } = getStore();
+    dispatch(requested());
+    try {
+      const params = getPaginateParams(pagination);
+      const data = await articleService.loadChunk(params);
+      dispatch(loaded(data));
+    } catch (error) {
+      callHandleError({ chunk: error }, dispatch);
+      throw error;
+    }
+  },
 
   setArticleOne: (slug) => async (dispatch) => {
     dispatch(requestedOne());
@@ -99,6 +104,7 @@ export const articleActions = {
     try {
       const data = await articleService.create({ article });
       dispatch(loadedOne(data));
+      dispatch(setInitPagination());
     } catch (error) {
       callHandleError({ create: error }, dispatch);
       throw error;
@@ -117,22 +123,27 @@ export const articleActions = {
   },
 
   deleteArticle: (slug) => async (dispatch) => {
-    const { setArticlesChunk } = articleActions;
     dispatch(deletedOne());
     try {
       await articleService.delete(slug);
-      setArticlesChunk();
     } catch (error) {
       callHandleError({ delete: error }, dispatch);
       throw error;
     }
   },
 
-  addFavorite: (slug) => async (dispatch) => {
+  likeArticle: (slug, isLiked) => async (dispatch) => {
+    const { setArticlesChunk } = articleActions;
     dispatch(requestedOne());
+    let data = null;
     try {
-      const data = await articleService.addFavorite(slug);
+      if (isLiked) {
+        data = await articleService.unlike(slug);
+      } else {
+        data = await articleService.like(slug);
+      }
       dispatch(loadedOne(data));
+      dispatch(setArticlesChunk());
     } catch (error) {
       callHandleError({ like: error }, dispatch);
       throw error;

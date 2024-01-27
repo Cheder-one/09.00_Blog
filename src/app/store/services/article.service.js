@@ -63,6 +63,16 @@ const articleService = {
       throw new ServiceError(error, info);
     }
   },
+  unlike: async (slug) => {
+    try {
+      const { data } = await api.delete(`/articles/${slug}/favorite`);
+      return data;
+    } catch (error) {
+      console.log(error);
+      const info = `Ошибка удаления лайка article с ID ${slug}`;
+      throw new ServiceError(error, info);
+    }
+  },
 };
 
 export default articleService;

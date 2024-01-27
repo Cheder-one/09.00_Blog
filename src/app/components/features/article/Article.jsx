@@ -1,5 +1,6 @@
 import { Row } from 'antd';
 import Markdown from 'markdown-to-jsx';
+import { PropTypes } from 'prop-types';
 
 import { removeInvisibleChar } from '../../../../utils';
 
@@ -20,6 +21,7 @@ function Article({ article, isFull }) {
           title={article.title}
           hearts={article.favoritesCount}
           tagList={article.tagList}
+          isLiked={article.favorited}
           isFull
         />
         <PostedMeta

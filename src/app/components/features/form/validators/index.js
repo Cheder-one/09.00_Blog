@@ -89,7 +89,7 @@ export const tagsCheck = {
     message: 'Tag must be less than 20 characters',
   },
   pattern: {
-    value: /^[a-zа-я0-9+-_@\s]+$/,
+    value: /^[a-zа-я0-9.+-_%@\s]+$/,
     message: 'Only lowercase letters and numbers',
   },
 };

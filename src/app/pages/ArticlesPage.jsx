@@ -1,16 +1,15 @@
 import { Col } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators as bindActions } from 'redux';
 import { toast } from 'react-toastify';
+import { bindActionCreators as bindActions } from 'redux';
 
+import { useScrollTop } from '../../hooks';
 import { Pagination } from '../components/ui';
-import { getPaginateParams } from '../../utils';
 import { ArticleList } from '../components/features';
 import { errorsActions } from '../store/reducers/errors';
 import { paginationSelectors } from '../store/reducers/pagination';
 import { articleActions, articleSelectors } from '../store/reducers/articles';
-import { useScrollTop } from '../../hooks';
 
 function ArticlesPage({
   articlesChunk,
@@ -18,12 +17,11 @@ function ArticlesPage({
   isLoading,
   setArticlesChunk,
 }) {
-  useScrollTop();
   const { articles, articlesCount } = articlesChunk;
+  useScrollTop();
 
   useEffect(() => {
-    const params = getPaginateParams({ pagination });
-    setArticlesChunk(params) // prettier-ignore
+    setArticlesChunk() // prettier-ignore
       .catch((err) => toast.error(err.info));
   }, [pagination]);
 

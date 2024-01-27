@@ -11,11 +11,7 @@ import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
-import {
-  useAlert,
-  useScrollToElement,
-  useSubmitStatus,
-} from '../../../../../hooks';
+import { useScrollToElement, useSubmitStatus } from '../../../../../hooks';
 import { Loader } from '../../../ui';
 import FormController from '../helpers/FormController';
 import { descriptionCheck, textCheck, titleCheck } from '../validators';
@@ -33,7 +29,6 @@ function ArticleForm({
   isLoadingOne,
 }) {
   const { edit, create } = articleError || {};
-  // console.log(edit, create);
   const [isSubmitted, setIsSubmitted] = useSubmitStatus(edit || create);
   const { control, register, setValue, handleSubmit, formState } = useForm();
   const { fields, append, remove } = useFieldArray({ control, name: 'tags' });

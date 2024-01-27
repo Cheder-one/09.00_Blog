@@ -1,5 +1,4 @@
-const getPaginateParams = ({ pagination }) => {
-  const { currentPage, pageSize } = pagination;
+const getPaginateParams = ({ currentPage, pageSize }) => {
   return { limit: pageSize, offset: pageSize * (currentPage - 1) };
 };
 
