@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Col, Row, Image } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -30,5 +31,11 @@ function PostedMeta({ date, image, username }) {
     </Row>
   );
 }
+
+PostedMeta.propTypes = {
+  date: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+};
 
 export default PostedMeta;

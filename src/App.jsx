@@ -1,9 +1,10 @@
 import { Flex } from 'antd';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { ToastContainer } from 'react-toastify';
-import { Route, Switch, Redirect } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { ArticlesPage } from './app/pages';
 import { NotFound } from './app/components/ui';
@@ -44,13 +45,13 @@ function App({ checkAuth }) {
   );
 }
 
-const mapState = (state) => ({
-  //
-});
+App.propTypes = {
+  checkAuth: PropTypes.func.isRequired,
+};
 
 const mapDispatch = (dispatch) => {
   const authAct = bindActions(authActions, dispatch);
   return { ...authAct };
 };
 
-export default connect(mapState, mapDispatch)(App);
+export default connect(null, mapDispatch)(App);

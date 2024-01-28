@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { HeaderSkeleton } from '../../ui';
 
 import HeaderAuth from './HeaderAuth';
@@ -12,5 +14,14 @@ function HeaderContent({ isAuthenticated, isAuthLoaded }) {
   }
   return <HeaderSkeleton />;
 }
+
+HeaderContent.propTypes = {
+  isAuthenticated: PropTypes.oneOf([null, false, true]),
+  isAuthLoaded: PropTypes.bool.isRequired,
+};
+
+HeaderContent.defaultProps = {
+  isAuthenticated: null,
+};
 
 export default HeaderContent;

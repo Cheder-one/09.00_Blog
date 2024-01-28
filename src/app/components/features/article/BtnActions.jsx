@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Col, Row, Button, Popconfirm } from 'antd';
@@ -47,6 +48,13 @@ function BtnActions({ author, username, isFull, deleteArticle }) {
     )
   );
 }
+
+BtnActions.propTypes = {
+  author: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  isFull: PropTypes.bool.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
+};
 
 const mapState = (state) => ({
   username: authSelectors.getUser(state)?.username,

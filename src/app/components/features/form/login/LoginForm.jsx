@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { Flex, Form, Input, Button } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
-import { toast } from 'react-toastify';
 
 import FormController from '../helpers/FormController';
 import { emailCheck, passwordCheck } from '../validators';
@@ -90,6 +91,13 @@ function LoginForm({ loginUser, authError }) {
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  authError: PropTypes.shape({
+    login: PropTypes.string,
+  }).isRequired,
+};
 
 const mapState = (state) => ({
   authError: authSelectors.getError(state),

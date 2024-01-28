@@ -1,10 +1,10 @@
-/** @jsxImportSource @emotion/react */
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { Flex, Form, Input, Button } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
-import { toast } from 'react-toastify';
 
 import {
   nameCheck,
@@ -14,7 +14,7 @@ import {
 } from '../validators';
 import _ from '../login/LoginForm.module.scss';
 import FormController from '../helpers/FormController';
-import { useAlert, useSubmitStatus } from '../../../../../hooks';
+import { useSubmitStatus } from '../../../../../hooks';
 import { authActions, authSelectors } from '../../../../store/reducers/auth';
 
 import { usePresetProfileEditForm } from './helpers';
@@ -112,6 +112,19 @@ function ProfileEditForm({ user, editUser, authError }) {
     </div>
   );
 }
+
+ProfileEditForm.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  }).isRequired,
+  editUser: PropTypes.func.isRequired,
+  authError: PropTypes.shape({
+    profileEdit: PropTypes.string,
+  }).isRequired,
+};
 
 const mapState = (state) => ({
   user: authSelectors.getUser(state),

@@ -1,5 +1,6 @@
-import { Tooltip, Typography } from 'antd';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { Tooltip, Typography } from 'antd';
 
 import _ from './Article.module.scss';
 
@@ -24,5 +25,15 @@ function Description({ description, full }) {
     </Tooltip>
   );
 }
+
+Description.propTypes = {
+  description: PropTypes.string,
+  full: PropTypes.string,
+};
+
+Description.defaultProps = {
+  description: '',
+  full: '',
+};
 
 export default Description;

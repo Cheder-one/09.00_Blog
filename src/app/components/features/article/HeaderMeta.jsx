@@ -1,10 +1,10 @@
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { Col, Row, Tooltip } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
-import { useState } from 'react';
 
 import heart from '../../../assets/heart.svg';
 import heartRed from '../../../assets/heart_red.svg';
@@ -60,6 +60,16 @@ function HeaderMeta({
     </Col>
   );
 }
+
+HeaderMeta.propTypes = {
+  slug: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  hearts: PropTypes.number.isRequired,
+  tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  likeArticle: PropTypes.func.isRequired,
+  isLiked: PropTypes.bool.isRequired,
+  isFull: PropTypes.bool.isRequired,
+};
 
 const mapDispatch = (dispatch) => {
   const articleAct = bindActions(articleActions, dispatch);

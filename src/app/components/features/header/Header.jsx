@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { bindActionCreators as bindActions } from 'redux';
 
-import { paginationActions } from '../../../store/reducers/pagination';
 import { authSelectors } from '../../../store/reducers/auth';
+import { paginationActions } from '../../../store/reducers/pagination';
 
 import _ from './Header.module.scss';
 import HeaderContent from './HeaderContent';
@@ -30,6 +30,7 @@ Header.propTypes = {
     PropTypes.bool,
     PropTypes.oneOf([null]),
   ]),
+  isAuthLoaded: PropTypes.bool.isRequired,
 };
 
 Header.defaultProps = {

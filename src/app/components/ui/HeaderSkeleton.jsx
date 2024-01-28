@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx } from '@emotion/react';
 import { Skeleton } from 'antd';
 
 function HeaderSkeleton() {

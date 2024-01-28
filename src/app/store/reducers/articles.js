@@ -7,7 +7,6 @@ import { handleError } from './helpers';
 import { paginationActions } from './pagination';
 
 const { setInitPagination } = paginationActions;
-// const { setArticlesChunk } = articleActions;
 
 const initialState = {
   chunk: {

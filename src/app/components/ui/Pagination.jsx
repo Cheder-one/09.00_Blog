@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import PropTypes from 'prop-types';
-import { jsx } from '@emotion/react';
 import { connect } from 'react-redux';
 import { Pagination as Paginate, Flex } from 'antd';
 import { bindActionCreators as bindActions } from 'redux';
@@ -34,10 +33,14 @@ function Pagination({ itemsCount, currentPage, pageSize, updatePagination }) {
 }
 
 Pagination.propTypes = {
-  // itemsCount: PropTypes.number.isRequired,
-  // onPageChange: PropTypes.func.isRequired,
-  // currPage: PropTypes.number.isRequired,
-  // pageSize: PropTypes.number,
+  itemsCount: PropTypes.number,
+  currentPage: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  updatePagination: PropTypes.func.isRequired,
+};
+
+Pagination.defaultProps = {
+  itemsCount: 0,
 };
 
 const mapState = (state) => ({

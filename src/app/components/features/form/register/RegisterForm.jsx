@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
@@ -136,6 +137,13 @@ function RegisterForm({ registerUser, authError }) {
     </div>
   );
 }
+
+RegisterForm.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  authError: PropTypes.shape({
+    register: PropTypes.string,
+  }).isRequired,
+};
 
 const mapState = (state) => ({
   authError: authSelectors.getError(state),

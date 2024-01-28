@@ -10,8 +10,8 @@ import createStore from './app/store/root/store.js';
 const store = createStore();
 
 if (process.env.NODE_ENV === 'production') {
-  console.log = function () {};
-  console.error = function () {};
+  console.log = () => {};
+  console.error = () => {};
 }
 
 createRoot(document.getElementById('root')).render(

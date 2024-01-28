@@ -1,20 +1,20 @@
-/** @jsxImportSource @emotion/react */
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import { PropTypes } from 'prop-types';
 import { Input, Button, Form, Col } from 'antd';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { bindActionCreators as bindActions } from 'redux';
-import { toast } from 'react-toastify';
 
 import {
   articleActions,
   articleSelectors,
 } from '../../../../store/reducers/articles';
-import { useScrollToElement, useSubmitStatus } from '../../../../../hooks';
 import { Loader } from '../../../ui';
 import FormController from '../helpers/FormController';
 import { descriptionCheck, textCheck, titleCheck } from '../validators';
+import { useScrollToElement, useSubmitStatus } from '../../../../../hooks';
 
 import TagsList from './TagsList';
 import _ from './ArticleForm.module.scss';
@@ -140,10 +140,36 @@ function ArticleForm({
           </Form>
         </div>
       </div>
-      {/* {isLoadingOne && isEdit && <Loader />} */}
+      {isLoadingOne && isEdit && <Loader />}
     </div>
   );
 }
+
+ArticleForm.propTypes = {
+  articleOne: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    body: PropTypes.string,
+    tagList: PropTypes.arrayOf(PropTypes.string),
+  }),
+  setArticleOne: PropTypes.func.isRequired,
+  createArticle: PropTypes.func.isRequired,
+  editArticle: PropTypes.func.isRequired,
+  articleError: PropTypes.shape({
+    edit: PropTypes.bool,
+    create: PropTypes.bool,
+  }).isRequired,
+  isLoadingOne: PropTypes.bool.isRequired,
+};
+
+ArticleForm.defaultProps = {
+  articleOne: {
+    title: '',
+    description: '',
+    body: '',
+    tagList: [],
+  },
+};
 
 const mapState = (state) => ({
   articleOne: articleSelectors.getOne(state),

@@ -44,4 +44,26 @@ function Article({ article, isFull }) {
   );
 }
 
+Article.propTypes = {
+  article: PropTypes.shape({
+    createdAt: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    favorited: PropTypes.bool.isRequired,
+    favoritesCount: PropTypes.number.isRequired,
+    slug: PropTypes.string.isRequired,
+    tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      image: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+    body: PropTypes.string,
+  }).isRequired,
+  isFull: PropTypes.bool,
+};
+
+Article.defaultProps = {
+  isFull: false,
+};
+
 export default Article;
