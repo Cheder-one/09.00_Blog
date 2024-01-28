@@ -20,9 +20,6 @@ import ArticleRoutes from './routes/ArticleRoutes';
 // TODO Внедрить TypeScript
 // TODO Добавить PropTypes
 
-// FIXME HeaderSkeleton
-// FIXME Запретить отображение console.log в режиме production
-
 function App({ checkAuth }) {
   useEffect(() => {
     checkAuth();
